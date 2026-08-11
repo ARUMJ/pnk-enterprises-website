@@ -903,6 +903,23 @@ No upscaling is performed at any size. At `32vw` the browser requests 819 px
 - The 8 original client JPGs in `public/images/source/` verified unchanged
   against their MD5 manifest.
 
+### 18C.5 Shipping record
+
+| Field         | Value                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------ |
+| Branch        | `dev`                                                                                                  |
+| Commit        | `2a2d5c8a7b2470063f1198b06d5463ae5ef49b58`                                                             |
+| CI run        | [31541616410](https://github.com/ARUMJ/pnk-enterprises-website/actions/runs/31541616410) — **success** |
+| Preview       | https://pnk-enterprises-website-6u2yiqo3e-gospelboys.vercel.app                                        |
+| Deployment id | `5859549860` (Preview, state `success`)                                                                |
+| `main`        | `522ded38ab099b6e80f29f9938d6cfaeeb97f116` — **untouched**                                             |
+| Date          | 2026-08-11                                                                                             |
+
+Files changed (6): `public/images/owner/owner-portrait.webp`,
+`public/images/owner/owner-portrait.jpg`, `src/components/media/MediaFrame.tsx`,
+`next.config.ts`, `src/components/sections/OwnerPortrait.tsx`,
+`docs/PROJECT_STATE.md`.
+
 ### 18C.5 Rules for anyone touching this portrait
 
 - **Never** regenerate, face-swap, AI-approximate, de-age, smooth, retone or
