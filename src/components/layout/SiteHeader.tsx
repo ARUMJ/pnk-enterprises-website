@@ -137,12 +137,12 @@ export default function SiteHeader() {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className="text-ink-600 hover:text-ink-900 aria-[current=page]:text-ink-900 relative rounded-full px-4 py-2 text-sm transition-colors duration-(--duration-fast)"
+                  className="group text-ink-600 hover:text-ink-900 aria-[current=page]:text-ink-900 relative rounded-full px-4 py-2 text-sm transition-colors duration-(--duration-fast)"
                 >
                   {item.label}
                   <span
                     aria-hidden="true"
-                    className="bg-brass-600 absolute inset-x-4 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-(--duration-base) ease-(--ease-out-quint) group-hover:scale-x-100 motion-reduce:transition-none"
+                    className="bg-brass-600 absolute inset-x-4 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-(--duration-base) ease-(--ease-out-quint) group-hover:scale-x-100 group-focus-visible:scale-x-100 data-underline:scale-x-100 motion-reduce:transition-none"
                     data-underline={isActive(item.href) ? "" : undefined}
                   />
                 </Link>
