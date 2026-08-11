@@ -47,8 +47,34 @@ export const siteMeta = {
   url: siteUrl,
   locale: "en_NG",
   language: "en-NG",
-  /** Neutral placeholder artwork; replaced when brand assets are supplied. */
-  ogImage: "/images/placeholder.svg",
+} as const;
+
+/**
+ * Open Graph imagery is supplied by `src/app/opengraph-image.tsx` via the
+ * App Router file convention, which generates a 1200x630 PNG and emits
+ * `og:image`, `og:image:width`, `og:image:height`, `og:image:type` and
+ * `og:image:alt` automatically for the root segment and every route that
+ * inherits from it.
+ *
+ * The root segment picks the generated card up automatically, so
+ * `defaultMetadata` deliberately declares no `images` array.
+ *
+ * Child segments are different: `pageMetadata()` supplies its own `openGraph`
+ * object, and an explicit `openGraph` on a nested segment replaces the parent's
+ * — including the image the file convention injected. Those routes therefore
+ * point at the very same generated asset through `ogImage` below, so every page
+ * shares one card and one set of dimension tags.
+ *
+ * Keep the width/height/type in sync with `size`/`contentType` in
+ * `src/app/opengraph-image.tsx`; WhatsApp, Facebook, LinkedIn and X rely on
+ * them to render a large card rather than a thumbnail.
+ */
+export const ogImage = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  type: "image/png",
+  alt: `${localBusiness.name} — household, kitchen and home appliance products, Lagos, Nigeria`,
 } as const;
 
 /**
@@ -76,18 +102,11 @@ export const defaultMetadata: Metadata = {
     description: siteMeta.description,
     url: siteMeta.url,
     locale: siteMeta.locale,
-    images: [
-      {
-        url: siteMeta.ogImage,
-        alt: `${siteMeta.name} — household, kitchen and home appliance products`,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteMeta.title,
     description: siteMeta.description,
-    images: [siteMeta.ogImage],
   },
   robots: isIndexable
     ? {
@@ -134,18 +153,13 @@ export function pageMetadata({
       description,
       url: absolute,
       locale: siteMeta.locale,
-      images: [
-        {
-          url: siteMeta.ogImage,
-          alt: `${siteMeta.name} — household, kitchen and home appliance products`,
-        },
-      ],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${siteMeta.name}`,
       description,
-      images: [siteMeta.ogImage],
+      images: [ogImage],
     },
   };
 }
