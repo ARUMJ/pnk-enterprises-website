@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Section";
@@ -22,6 +23,14 @@ export default function SiteFooter() {
       <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.1fr_0.8fr_1fr_1.3fr]">
           <div>
+            <Image
+              src="/images/brand/pnk-mark-bone.webp"
+              alt=""
+              width={820}
+              height={810}
+              sizes="48px"
+              className="mb-5 h-12 w-auto"
+            />
             <p className="font-display text-bone text-2xl">
               PNK<span className="text-brass-400">.</span> Enterprises
             </p>

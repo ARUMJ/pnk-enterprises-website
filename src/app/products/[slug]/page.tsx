@@ -116,6 +116,52 @@ export default async function ProductCategoryPage({ params }: PageProps) {
         </Container>
       </Section>
 
+      {/* ---- Photographs of the range -----------------------------------
+          Only rendered where the business has supplied more than one
+          photograph of this range. Nothing is padded with stock imagery, so a
+          range with no photography simply has no gallery. */}
+      {category.gallery.length > 1 ? (
+        <Section
+          labelledBy="gallery-heading"
+          className="border-ink-200 bg-bone-dark border-y"
+        >
+          <Container>
+            <Reveal>
+              <h2
+                id="gallery-heading"
+                className="text-ink-900 text-[clamp(1.9rem,4vw,2.7rem)] leading-[1.1]"
+              >
+                From the range
+              </h2>
+            </Reveal>
+            <Reveal delay={80}>
+              <p className="text-ink-600 mt-5 max-w-xl text-base leading-relaxed">
+                Photographs of stock the business carries. Availability of any
+                particular item is confirmed directly with the business.
+              </p>
+            </Reveal>
+            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {category.gallery.map((photo, index) => (
+                <Reveal
+                  as="li"
+                  key={photo.src}
+                  delay={index * 70}
+                  variant="mask"
+                >
+                  <MediaFrame
+                    src={photo.src}
+                    alt={photo.alt}
+                    ratio="square"
+                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                    className="border-ink-200 border"
+                  />
+                </Reveal>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      ) : null}
+
       {/* ---- Product types in this range ---- */}
       <Section labelledBy="types-heading" className="bg-bone">
         <Container>

@@ -4,16 +4,13 @@ import { Container, Eyebrow, Section } from "@/components/ui/Section";
 import localBusiness from "@/data/localBusiness.json";
 
 /**
- * Reserved slot for the owner's photograph.
+ * The owner's photograph.
  *
- * The photograph exists but has not been supplied yet, so this deliberately
- * renders the reserved state rather than a stand-in face. No stock portrait
- * and no generated likeness is used — a fake person on an "about the owner"
- * section would misrepresent the business.
- *
- * The frame reserves a 4:5 portrait, which is the ratio the real photograph
- * should be supplied in. Dropping it in means setting `src` and writing real
- * alt text here; nothing around it moves.
+ * This is a real, client-supplied photograph of the owner — not a stock
+ * portrait and not a generated likeness. It has been prepared for the web
+ * (reframed to the 4:5 portrait this slot reserves, tonally balanced, and
+ * given a shallower depth of field so the subject separates from the
+ * background). His face, features and identity are unaltered.
  *
  * The copy is confined to what the owner has actually stated: the business
  * name, the 1998 account (always qualified), and the stated priorities. There
@@ -30,27 +27,13 @@ export default function OwnerPortrait() {
           <Reveal variant="mask">
             <figure>
               <MediaFrame
+                src="/images/owner/owner-portrait.webp"
+                alt={`The owner of ${localBusiness.name}, photographed outside a building wearing a pale blue traditional outfit.`}
                 ratio="portrait"
                 sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
-                reservedLabel="Owner photograph to be added"
-                fallback={
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 48 48"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.25"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-ink-400 h-14 w-14"
-                  >
-                    <circle cx="24" cy="17" r="8" />
-                    <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" />
-                  </svg>
-                }
               />
               <figcaption className="text-ink-600 mt-4 text-sm leading-relaxed">
-                A photograph of the owner will appear here once supplied.
+                The owner of {localBusiness.name}.
               </figcaption>
             </figure>
           </Reveal>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -106,14 +107,25 @@ export default function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
         <Link
           href="/"
-          className="group flex flex-col leading-none"
+          className="group flex items-center gap-3 leading-none"
           aria-label="PNK ENTERPRISES — go to homepage"
         >
-          <span className="font-display text-ink-900 text-lg tracking-tight sm:text-xl">
-            PNK<span className="text-brass-600">.</span>
-          </span>
-          <span className="text-ink-600 mt-1 text-[0.6rem] font-semibold tracking-[0.22em] uppercase">
-            Enterprises
+          <Image
+            src="/images/brand/pnk-mark-navy.webp"
+            alt=""
+            width={820}
+            height={810}
+            sizes="40px"
+            priority
+            className="h-9 w-auto sm:h-10"
+          />
+          <span className="flex flex-col">
+            <span className="font-display text-ink-900 text-lg tracking-tight sm:text-xl">
+              PNK<span className="text-brass-600">.</span>
+            </span>
+            <span className="text-ink-600 mt-1 text-[0.6rem] font-semibold tracking-[0.22em] uppercase">
+              Enterprises
+            </span>
           </span>
         </Link>
 

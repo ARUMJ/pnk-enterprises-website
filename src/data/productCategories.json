@@ -10,8 +10,22 @@
       "summary": "Food flasks and water flasks for keeping meals and drinks at temperature.",
       "intro": "Vacuum flasks are one of the core ranges PNK ENTERPRISES trades in. The category covers insulated containers for both solid food and drinks, for daily meals, travel and events.",
       "icon": "flask",
-      "image": null,
-      "imageAlt": null,
+      "image": "/images/products/gluck-vacuum-food-jar.webp",
+      "imageAlt": "A GLÜCK Premium vacuum-insulated stainless steel food jar, part of the flask range stocked by PNK ENTERPRISES.",
+      "gallery": [
+        {
+          "src": "/images/products/gluck-vacuum-food-jar.webp",
+          "alt": "A GLÜCK Premium vacuum-insulated stainless steel food jar with a carry handle."
+        },
+        {
+          "src": "/images/products/gluck-vacuum-beverage-bottle.webp",
+          "alt": "A large GLÜCK Premium vacuum flask in dark grey, for carrying hot or cold drinks."
+        },
+        {
+          "src": "/images/products/gluck-vacuum-tumbler.webp",
+          "alt": "A GLÜCK Premium vacuum-insulated stainless steel tumbler with a handle and straw lid."
+        }
+      ],
       "groups": [
         {
           "name": "Food flasks",
@@ -40,6 +54,7 @@
       "icon": "cooler",
       "image": null,
       "imageAlt": null,
+      "gallery": [],
       "groups": [
         {
           "name": "Food coolers",
@@ -66,8 +81,14 @@
       "summary": "Pots, cutlery sets and other equipment for everyday cooking and serving.",
       "intro": "The kitchen equipment range covers the non-powered essentials of a working kitchen — cookware for preparing meals and cutlery for serving them. These are the items households replace and upgrade most often.",
       "icon": "pot",
-      "image": null,
-      "imageAlt": null,
+      "image": "/images/products/crown-star-aluminium-cookware-set.webp",
+      "imageAlt": "A Crown Star Master Chef ten-piece aluminium cookware set of lidded pots in graduated sizes.",
+      "gallery": [
+        {
+          "src": "/images/products/crown-star-aluminium-cookware-set.webp",
+          "alt": "A Crown Star Master Chef ten-piece aluminium cookware set of lidded pots in graduated sizes."
+        }
+      ],
       "groups": [
         {
           "name": "Pots and cookware",
@@ -98,8 +119,18 @@
       "summary": "Powered appliances for preparing and heating food in the home.",
       "intro": "The home appliance range covers the powered equipment used to prepare, blend and heat food. It is the fastest-moving part of the household market, and the part where authenticity matters most — which is why the business emphasises stocking genuine products.",
       "icon": "blender",
-      "image": null,
-      "imageAlt": null,
+      "image": "/images/products/sokany-air-fryer.webp",
+      "imageAlt": "A Sokany healthy air fryer with twin control dials and a pull-out frying drawer.",
+      "gallery": [
+        {
+          "src": "/images/products/sokany-air-fryer.webp",
+          "alt": "A Sokany healthy air fryer with twin control dials and a pull-out frying drawer."
+        },
+        {
+          "src": "/images/products/pyramid-blender.webp",
+          "alt": "A Pyramid countertop blender with a clear jug and a control dial on the base."
+        }
+      ],
       "groups": [
         {
           "name": "Blenders",
@@ -140,6 +171,7 @@
       "icon": "home",
       "image": null,
       "imageAlt": null,
+      "gallery": [],
       "groups": [
         {
           "name": "Household items",

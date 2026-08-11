@@ -492,25 +492,37 @@ above.
 
 ## 18. Next Planned Phase
 
-**Phase 3B — Real assets, branding and image integration.** The owner has the
-logo, product photographs and an owner photograph; they were deliberately **not**
-supplied to Phase 3A, and no substitutes were invented. Scope:
+**Phase 3B is complete.** The client supplied eight photographs (logo, six
+product box photos, one owner portrait), now held read-only in
+`public/images/source/` and prepared into `public/images/{brand,owner,products}/`.
 
-1. **Product photography** — set `image`/`imageAlt` on each record in
-   `productCategories.json`. This is a data edit; `MediaFrame` already reserves
-   the correct ratio, so no layout work and no CLS.
-2. **Owner photograph** — drop into the reserved `OwnerPortrait` slot on
-   `/about`.
-3. **Logo and branding** — replace the type-set wordmark in `SiteHeader` and
-   `SiteFooter`; revisit palette only if the real brand demands it.
-4. **Image optimisation** — correct `sizes`, `priority` on the hero image only,
-   modern formats, meaningful filenames, accurate non-stuffed `alt` text.
-5. **A real Open Graph image**, replacing `/images/placeholder.svg`.
-6. Then, as a **separate dedicated phase**: advanced motion — hero
-   choreography, product interactions, image reveals, section transitions,
-   parallax and logo motion. Phase 3A intentionally added **no** new motion
-   complexity and every new section reuses the existing `Reveal` +
-   `RevealObserver` system, so that phase starts from a clean base.
+Delivered in 3B:
+
+1. **Logo** — deskewed, stray ink removed, alpha cut, and issued as navy / bone
+   / ink variants plus a 512px app icon. Presentation only; the identity itself
+   was not redesigned.
+2. **Product photography** — six photographs reframed to a common 1:1, tonally
+   matched and colour-checked against the originals, then mapped to the three
+   categories they genuinely represent.
+3. **Owner portrait** — reframed to 4:5, tonally balanced, with a shallower
+   depth of field. Face, features, age and clothing unaltered.
+4. **Integration** — hero composition, category cards, category hero images, a
+   `gallery` field for ranges with several real photographs, header/footer
+   marks, favicon/apple icon and `LocalBusiness.logo`/`image`.
+
+Still outstanding, and deliberately not faked:
+
+- **No cooler photograph and no household-item photograph exist**, so those two
+  categories keep their honest reserved-slot treatment. They need real
+  photography from the business.
+- **A real Open Graph image** still replaces nothing — `/images/placeholder.svg`
+  is still the OG asset.
+- **Supplementary licensed stock imagery** (lifestyle/atmosphere) could not be
+  fetched in the build environment; see the Phase 3B report.
+- Then, as a **separate dedicated phase**: advanced motion — hero
+  choreography, product interactions, image reveals, section transitions,
+  parallax and logo motion. Phase 3B added **no** new motion complexity; every
+  new image reuses the existing `Reveal` + `RevealObserver` system.
 
 Not planned, and should not be added without an explicit client decision: a
 cart, checkout, payments, prices, stock levels, a CMS, or a contact form
@@ -582,7 +594,7 @@ prices, stock availability, or export capability.
 ---
 
 **LAST UPDATED:** 2026-08-11
-**CURRENT PHASE:** Phase 3A — Product Architecture, Content Structure & Conversion Foundation (complete)
-**CURRENT DEV COMMIT:** see `git log origin/dev -1` — Phase 3A commit "feat: product architecture, category routes, enquiry conversion path and breadcrumbs"
-**VERCEL PREVIEW STATUS:** see the Phase 3A delivery report / Vercel dashboard
-**NEXT ACTION:** Collect the real assets listed in §17 from the client, then begin Phase 3B (§18)
+**CURRENT PHASE:** Phase 3B — Branding, Real Imagery, Product Photography & Executive Portrait (complete)
+**CURRENT DEV COMMIT:** see `git log origin/dev -1` — Phase 3B commit "feat: integrate prepared client branding, product photography and owner portrait"
+**VERCEL PREVIEW STATUS:** see the Phase 3B delivery report / Vercel dashboard
+**NEXT ACTION:** Client review of the Phase 3B Preview (logo, portrait, product imagery, mobile layout). Then: cooler + household-item photography, a real OG image, and the dedicated motion phase (§18)

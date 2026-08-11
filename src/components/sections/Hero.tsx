@@ -1,7 +1,35 @@
-import CategoryIcon from "@/components/media/CategoryIcon";
+import Image from "next/image";
+
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Section";
-import { categoryGroupNames, productCategories } from "@/lib/products";
+
+/**
+ * Photographs supplied by the business, of stock it carries. Each caption
+ * names the product type only — no prices, no models presented as an offer
+ * and no claim about what is in stock today.
+ */
+const heroShots = [
+  {
+    src: "/images/products/gluck-vacuum-food-jar.webp",
+    alt: "A GLÜCK Premium vacuum-insulated stainless steel food jar with a carry handle.",
+    label: "Vacuum flasks",
+  },
+  {
+    src: "/images/products/crown-star-aluminium-cookware-set.webp",
+    alt: "A Crown Star Master Chef ten-piece aluminium cookware set of lidded pots in graduated sizes.",
+    label: "Kitchen equipment",
+  },
+  {
+    src: "/images/products/sokany-air-fryer.webp",
+    alt: "A Sokany healthy air fryer with twin control dials and a pull-out frying drawer.",
+    label: "Home appliances",
+  },
+  {
+    src: "/images/products/gluck-vacuum-tumbler.webp",
+    alt: "A GLÜCK Premium vacuum-insulated stainless steel tumbler with a handle and straw lid.",
+    label: "Flasks & tumblers",
+  },
+];
 
 /**
  * Homepage hero.
@@ -15,8 +43,6 @@ import { categoryGroupNames, productCategories } from "@/lib/products";
  * ratings, counts, years of experience or delivery promises.
  */
 export default function Hero() {
-  const marks = productCategories.slice(0, 4);
-
   return (
     <section
       aria-labelledby="hero-heading"
@@ -97,44 +123,43 @@ export default function Hero() {
           </div>
 
           {/* ---- Composition column ----------------------------------------
-              A structured arrangement of category marks. This is deliberately
-              graphic rather than photographic: it looks intentional now, and
-              each tile is a MediaFrame-shaped slot that real product
-              photography can occupy later without touching the layout. */}
+              Four photographs of stock the business actually carries, supplied
+              by the business itself. Each tile keeps the square MediaFrame
+              geometry the rest of the site uses, so the hero stays a
+              composition rather than a gallery — four images, generous gaps,
+              no copy competing with the headline. */}
           <div
             data-enter
             style={{ "--enter-delay": "300ms", "--enter-shift": "2.5rem" }}
             className="relative"
           >
             <div className="grid grid-cols-2 gap-4 sm:gap-5">
-              {marks.map((category, index) => (
-                <div
-                  key={category.slug}
+              {heroShots.map((shot, index) => (
+                <figure
+                  key={shot.src}
                   className={[
-                    "pnk-float group border-bone/10 bg-bone/[0.045] relative flex aspect-square flex-col justify-between overflow-hidden rounded-(--radius-lg) border p-5 backdrop-blur-sm",
+                    "pnk-float border-bone/10 bg-bone/[0.045] relative overflow-hidden rounded-(--radius-lg) border backdrop-blur-sm",
                     index % 2 === 1 ? "translate-y-6" : "",
                   ].join(" ")}
                   style={{ "--float-delay": `${index * 900}ms` }}
                 >
-                  <CategoryIcon
-                    name={category.icon}
-                    className="text-brass-300 h-9 w-9"
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={1000}
+                    height={1000}
+                    priority={index === 0}
+                    sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
+                    className="aspect-square w-full object-cover"
                   />
-                  <div>
-                    <p className="font-display text-bone text-lg leading-tight">
-                      {category.name}
-                    </p>
-                    <p className="text-ink-300 mt-1 text-xs leading-relaxed">
-                      {categoryGroupNames(category).slice(0, 2).join(" · ")}
-                    </p>
-                  </div>
-                </div>
+                  <figcaption className="from-ink-950 via-ink-950/85 absolute inset-x-0 bottom-0 bg-gradient-to-t to-transparent px-4 pt-12 pb-3">
+                    <span className="text-bone text-xs font-medium tracking-wide">
+                      {shot.label}
+                    </span>
+                  </figcaption>
+                </figure>
               ))}
             </div>
-
-            <p className="text-ink-400 mt-8 text-center text-[0.7rem] tracking-[0.14em] uppercase">
-              Product photography to be added
-            </p>
           </div>
         </div>
       </Container>

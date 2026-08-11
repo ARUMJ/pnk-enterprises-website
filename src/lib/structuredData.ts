@@ -20,6 +20,8 @@ export type LocalBusinessJsonLd = {
   legalName: string;
   description: string;
   url: string;
+  logo: string;
+  image: string;
   email: string;
   telephone: string[];
   address: PostalAddress;
@@ -73,6 +75,9 @@ export function buildLocalBusinessJsonLd(): LocalBusinessJsonLd {
     legalName: localBusiness.legalName,
     description: localBusiness.description,
     url: siteUrl,
+    // The business's own logo, supplied by the owner.
+    logo: `${siteUrl}/images/brand/pnk-icon-512.png`,
+    image: `${siteUrl}/images/brand/pnk-icon-512.png`,
     email: localBusiness.email,
     // E.164 is the form search engines expect for `telephone`.
     telephone: localBusiness.phones.map(toE164),

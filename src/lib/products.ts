@@ -19,6 +19,11 @@ export type ProductGroup = {
   description: string;
 };
 
+export type CategoryPhoto = {
+  src: string;
+  alt: string;
+};
+
 export type ProductCategory = {
   slug: string;
   name: string;
@@ -32,6 +37,13 @@ export type ProductCategory = {
   image: string | null;
   /** Written alongside the photograph it describes, never guessed ahead of it. */
   imageAlt: string | null;
+  /**
+   * Additional photographs of stock the business carries, supplied by the
+   * business. Empty where no authentic photograph of the range exists — the
+   * gallery is never padded with stock imagery or with a product from a
+   * different range.
+   */
+  gallery: CategoryPhoto[];
   groups: ProductGroup[];
   suitedFor: string[];
   metaTitle: string;
