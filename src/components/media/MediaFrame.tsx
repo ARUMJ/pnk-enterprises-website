@@ -16,6 +16,18 @@ type MediaFrameProps = {
   ratio?: "square" | "portrait" | "landscape" | "wide";
   /** Responsive `sizes` hint; keeps Next.js from over-serving large files. */
   sizes?: string;
+  /**
+   * Focal point for the `object-cover` crop, as a CSS `object-position` value
+   * (e.g. `"50% 20%"`). Only matters when the image's aspect ratio differs
+   * from `ratio` and the frame therefore has to crop. Defaults to centred.
+   */
+  objectPosition?: string;
+  /**
+   * Per-image quality override for the Next.js optimizer. Leave unset for the
+   * project default; raise it only for images where facial or fine detail is
+   * the point, such as the founder portrait.
+   */
+  quality?: number;
   /** Set on the LCP image only. */
   priority?: boolean;
   /** Shown in place of a photograph while `src` is null. */
@@ -49,6 +61,8 @@ export default function MediaFrame({
   ratio = "landscape",
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   priority = false,
+  objectPosition,
+  quality,
   fallback,
   reservedLabel,
   className,
@@ -70,6 +84,8 @@ export default function MediaFrame({
           fill
           sizes={sizes}
           priority={priority}
+          quality={quality}
+          style={objectPosition ? { objectPosition } : undefined}
           className="object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-quint) group-hover:scale-[1.04] motion-reduce:transform-none motion-reduce:transition-none"
         />
       </div>

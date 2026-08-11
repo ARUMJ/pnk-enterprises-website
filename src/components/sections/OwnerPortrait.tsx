@@ -6,25 +6,22 @@ import localBusiness from "@/data/localBusiness.json";
 /**
  * The owner's photograph.
  *
- * The face is the owner's own face, taken from the client-supplied photograph
- * in `public/images/source/` — not a stock portrait and not a generated
- * likeness. His facial pixels are composited in unaltered: no reshaping, no
- * beautifying, no smoothing, no de-ageing. Identity was verified against the
- * source frame after every processing step (pupil-landmark alignment, RMSE
- * 0.073, zero geometric warp) — see §18B of `docs/PROJECT_STATE.md`.
+ * This is the client's own professional photograph, supplied and approved by
+ * him, and it is used **as photographed**. Nothing in it is generated: not the
+ * face, not the wardrobe, not the background, not the lighting. The only
+ * processing applied was deterministic encoding — PNG to WebP and JPEG at
+ * quality 92, metadata stripped, no resize and no crop (RMSE 0.0072 against
+ * the source, which is encoder noise).
  *
- * The wardrobe (charcoal suit, white shirt, dark navy tie), the studio
- * background and the studio lighting are AI-generated art direction, produced
- * because the only portrait the client supplied was taken outdoors in casual
- * dress. The subject, his features and his proportions are real; the styling
- * around him is not.
+ * This replaced an AI-composited portrait that had been built in earlier
+ * phases, when the only image available was a casual outdoor snapshot. That
+ * composite is gone. Do not reintroduce it, and do not "improve" this
+ * photograph with a generative model — see §18C of `docs/PROJECT_STATE.md`.
  *
- * In the Phase 3E pass the generated surroundings were conformed to the real
- * face rather than the reverse: scalp/temple/ear/neck sharpness matched to the
- * face's own texture, a single grain field applied across the whole head, the
- * colour temperature of the generated head warmed to the face's, and the
- * artificial rim light restrained. The face itself was masked out of every one
- * of those operations. See `docs/PROJECT_STATE.md` for the full record.
+ * The source is 922x1152, which is 4:5 to within half a pixel, so the frame
+ * shows essentially the whole photograph as composed. `objectPosition` pins
+ * the crop to the top so that any future rounding is taken from the jacket
+ * rather than from his head.
  *
  * The copy is confined to what the owner has actually stated: the business
  * name, the 1998 account (always qualified), and the stated priorities. There
@@ -42,9 +39,11 @@ export default function OwnerPortrait() {
             <figure>
               <MediaFrame
                 src="/images/owner/owner-portrait.webp"
-                alt={`The owner of ${localBusiness.name}, in a charcoal suit, white shirt and dark navy tie, photographed from the chest up against a dark ink-blue studio background.`}
+                alt={`The owner of ${localBusiness.name}, in a navy suit, white shirt and navy tie, photographed from the chest up.`}
                 ratio="portrait"
                 sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
+                objectPosition="50% 0%"
+                quality={90}
               />
               <figcaption className="text-ink-600 mt-4 text-sm leading-relaxed">
                 The owner of {localBusiness.name}.

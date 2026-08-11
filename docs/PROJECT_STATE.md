@@ -558,12 +558,12 @@ This is the single most important thing to understand before touching imagery.
 business assets and must never be replaced with generic or AI-generated
 substitutes:
 
-| Asset                                           | Origin                                |
-| ----------------------------------------------- | ------------------------------------- |
-| `public/images/brand/pnk-mark-*.{png,webp}`     | Client's own logo                     |
-| `public/images/owner/owner-portrait.{webp,jpg}` | Owner's real face (hybrid — see §18B) |
-| the six files in `public/images/products/`      | Client's own product photos           |
-| the eight originals in `public/images/source/`  | Untouched client uploads              |
+| Asset                                           | Origin                             |
+| ----------------------------------------------- | ---------------------------------- |
+| `public/images/brand/pnk-mark-*.{png,webp}`     | Client's own logo                  |
+| `public/images/owner/owner-portrait.{webp,jpg}` | Client's own photograph (see §18C) |
+| the six files in `public/images/products/`      | Client's own product photos        |
+| the eight originals in `public/images/source/`  | Untouched client uploads           |
 
 **ILLUSTRATIVE — AI-generated category artwork, created in Phase 3C.** These
 are _not_ photographs of PNK stock:
@@ -694,16 +694,17 @@ checkout, payments, prices, stock levels, a CMS, or a contact-form backend.
 
 ---
 
-## 18A. Phase 3D — The First Approved Founder Portrait (SUPERSEDED BY §18B)
+## 18A. Phase 3D — The First Approved Founder Portrait (SUPERSEDED — see §18C)
 
 > **SUPERSEDED.** The portrait described in this section was replaced on
-> 2026-08-11 by the **Phase 3E v2** portrait. See **§18B** for the live asset,
+> 2026-08-11, and the Phase 3E replacement has itself since been superseded by
+> the client's own photograph. See **§18C** for the live asset,
 > its identity score and its build recipe. This section is retained because its
 > principles, its verification protocol and especially its list of dead ends
 > are all still binding — only the shipped file changed.
 
 If you are a new agent picking this project up, read this section for the
-reasoning and the dead ends, then read §18B for what is actually live. Do not
+reasoning and the dead ends, then read §18C for what is actually live. Do not
 re-derive either.
 
 ### 18A.1 What was approved
@@ -714,8 +715,8 @@ rejected) and one refinement round.
 
 | Item              | Value                                                               |
 | ----------------- | ------------------------------------------------------------------- |
-| Asset (former)    | `owner-portrait.webp` (WebP q84, 160 KB) — **replaced, see §18B**   |
-| Fallback (former) | `owner-portrait.jpg` (JPEG q90, 503 KB) — **replaced, see §18B**    |
+| Asset (former)    | `owner-portrait.webp` (WebP q84, 160 KB) — **replaced, see §18C**   |
+| Fallback (former) | `owner-portrait.jpg` (JPEG q90, 503 KB) — **replaced, see §18C**    |
 | Dimensions        | 1200x1500 — **exactly 4:5**, matching `MediaFrame ratio="portrait"` |
 | Identity source   | `public/images/source/photo_6041819337141719603_y.jpg`              |
 | Rendered at       | `OwnerPortrait` section, `/about` — the only place it is used       |
@@ -827,11 +828,103 @@ dependency, no CI configuration, and nothing in `public/images/source/`.
 
 ---
 
-## 18B. Phase 3E — THE LIVE FOUNDER PORTRAIT (CURRENT — READ THIS FIRST)
+## 18C. Phase 3G — THE LIVE FOUNDER PORTRAIT (CURRENT — READ THIS FIRST)
 
-This supersedes §18A. Approved by the client and integrated on 2026-08-11.
+**CURRENT FOUNDER PORTRAIT: The approved client-supplied photograph is now the
+authoritative production portrait. Do not replace, regenerate, reconstruct, or
+AI-edit the client's face unless the project owner explicitly requests it.**
 
-### 18B.1 What is live
+### 18C.1 What is live
+
+| Field            | Value                                                                 |
+| ---------------- | --------------------------------------------------------------------- |
+| Production asset | `public/images/owner/owner-portrait.webp`                             |
+| Dimensions       | **922 × 1152** (native — never resized, cropped or upscaled)          |
+| Encoded size     | 121,730 B · WebP q92, method 6, metadata stripped                     |
+| MD5              | `bd167e7c9a306945920deafd714728fe`                                    |
+| Archival sibling | `public/images/owner/owner-portrait.jpg` (922 × 1152, q92 4:4:4)      |
+| Client source    | `public/images/source/client_photo.png` — **read-only, never delete** |
+| Source MD5       | `c1f523039966d5ad89e8129f820ae27b` (922 × 1152 PNG, 2,048,377 B)      |
+| Consumer         | `src/components/sections/OwnerPortrait.tsx` (sole reference)          |
+
+### 18C.2 What is real — the honest statement
+
+The portrait is **the client's own photograph, exactly as photographed.** The
+man, his face, his navy suit, white shirt, navy tie, the lighting and the
+warm neutral-grey backdrop are all in the original file. Nothing was
+generated, retouched, beautified, de-aged, smoothed, relit or recomposed.
+
+The only processing applied was **deterministic encoding**: PNG → WebP/JPEG,
+compression, and metadata strip. Measured RMSE between the delivered WebP and
+the source PNG is **0.0072** — encoder quantisation noise, with zero
+geometric or tonal change. There is no composite, no generated background and
+no AI-derived pixel anywhere in this image.
+
+Phase 3D and Phase 3E produced an AI composite of the founder. **It is gone.**
+It is not on disk, not referenced anywhere in `src/`, and none of it was
+retained.
+
+### 18C.3 The delivery pipeline was the problem, not the photograph
+
+The earlier portrait looked soft. The fix was in delivery, not in the image:
+
+1. **`next.config.ts` — `images: { qualities: [75, 90] }`.** Next 16.3.0
+   defaults to `qualities: [75]` and treats it as a strict **allow-list**: any
+   `quality` not listed makes `/_next/image` return **400** at request time.
+   `quality={90}` therefore _requires_ this entry — it is not a preference.
+   75 remains the site-wide default; 90 exists for the founder portrait alone.
+   Verified: `q=50` → 400, product images at `q=75` → 200, unchanged.
+2. **`MediaFrame` gained optional `objectPosition` and `quality` props**, both
+   wired to the underlying `<Image>`. Both are optional, so the other five
+   `MediaFrame` call sites are byte-for-byte unaffected.
+3. **`OwnerPortrait` sets `quality={90}` and `objectPosition="50% 0%"`.** The
+   source is 1:1.2495 and the `portrait` ratio is 4:5 (1:1.25) — an overflow of
+   **0.5 px (0.043 %)**. `50% 0%` pins that rounding loss to the bottom of the
+   jacket so it can never touch the head.
+
+No upscaling is performed at any size. At `32vw` the browser requests 819 px
+(1280 viewport), 922 px (1440) or 1229 px (1920); the last is served from the
+922 px original rather than being enlarged.
+
+### 18C.4 Validation performed before shipping
+
+- Four gates: **lint 0 · typecheck 0 · format 0 · build 0** (15/15 static
+  pages, 548 ms). No gate was bypassed.
+- `.next/cache/images` cleared, production build, `next start`, then the
+  **optimized bytes** were fetched and compared — not just the file on disk:
+  - vs. the client photograph: **RMSE 0.0076** (identical, encoder noise)
+  - vs. the old Phase 3E composite: **RMSE 0.2635** (35× larger — proves the
+    optimizer is serving the new photo, not a cached variant)
+- `/_next/image` at `w=640`, `w=828`, `w=1080`, `q=90` → all **200**.
+- All 9 routes → 200. **120 image references, 0 broken.**
+- Visually reviewed at 520 px desktop and 360 px mobile, plus a 100 % face
+  crop: sharp, natural skin texture, no distortion, no awkward crop, no
+  overflow. `aspect-[4/5]` reserves the box, so there is no layout shift.
+- The 8 original client JPGs in `public/images/source/` verified unchanged
+  against their MD5 manifest.
+
+### 18C.5 Rules for anyone touching this portrait
+
+- **Never** regenerate, face-swap, AI-approximate, de-age, smooth, retone or
+  alter the client's facial structure, hairline or skin.
+- **Never** add a generated background, gradient, fake studio or CGI object
+  behind him. The PNK visual system applies to the surrounding UI only.
+- If the crop or framing is ever wrong, **change the presentation** — the
+  ratio, `objectPosition`, `sizes`, or the container — **never the photograph.**
+- Optimization is limited to deterministic encoding. Do not upscale.
+- `public/images/source/` is read-only archival. Do not delete client assets.
+
+## 18B. Phase 3E — the former generated founder portrait (SUPERSEDED by §18C)
+
+> **SUPERSEDED — 2026-08-11.** The composite described in this section is no
+> longer on the site. It was replaced in Phase 3G by the client's own
+> photograph. Read **§18C** for the portrait that is actually live. Everything
+> below is retained only as a historical record of the generative pipeline and
+> its dead ends; **do not rebuild any of it.**
+
+This superseded §18A. Both are now superseded by §18C.
+
+### 18B.1 What was live (until Phase 3G)
 
 | Item              | Value                                                                |
 | ----------------- | -------------------------------------------------------------------- |
