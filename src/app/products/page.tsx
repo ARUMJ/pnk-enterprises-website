@@ -209,7 +209,7 @@ export default function ProductsPage() {
               <Reveal as="li" key={step.title} delay={index * 80}>
                 <p
                   aria-hidden="true"
-                  className="font-display text-brass-600 text-sm"
+                  className="font-display text-brass-700 text-sm"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </p>

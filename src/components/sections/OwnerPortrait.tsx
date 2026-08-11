@@ -49,7 +49,7 @@ export default function OwnerPortrait() {
                   </svg>
                 }
               />
-              <figcaption className="text-ink-500 mt-4 text-sm leading-relaxed">
+              <figcaption className="text-ink-600 mt-4 text-sm leading-relaxed">
                 A photograph of the owner will appear here once supplied.
               </figcaption>
             </figure>
@@ -85,7 +85,7 @@ export default function OwnerPortrait() {
               </p>
             </Reveal>
             <Reveal delay={240}>
-              <p className="text-ink-500 mt-6 text-sm">
+              <p className="text-ink-600 mt-6 text-sm">
                 1998 is the owner&rsquo;s account and has not been independently
                 verified.
               </p>

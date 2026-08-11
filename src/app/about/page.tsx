@@ -56,7 +56,7 @@ export default function AboutPage() {
               <Reveal delay={80}>
                 <dl className="mt-8 space-y-6">
                   <div className="border-ink-200 border-b pb-5">
-                    <dt className="text-ink-500 text-xs font-semibold tracking-[0.18em] uppercase">
+                    <dt className="text-ink-600 text-xs font-semibold tracking-[0.18em] uppercase">
                       Business name
                     </dt>
                     <dd className="font-display text-ink-900 mt-2 text-xl">
@@ -64,7 +64,7 @@ export default function AboutPage() {
                     </dd>
                   </div>
                   <div className="border-ink-200 border-b pb-5">
-                    <dt className="text-ink-500 text-xs font-semibold tracking-[0.18em] uppercase">
+                    <dt className="text-ink-600 text-xs font-semibold tracking-[0.18em] uppercase">
                       Full name
                     </dt>
                     <dd className="font-display text-ink-900 mt-2 text-xl">
@@ -72,7 +72,7 @@ export default function AboutPage() {
                     </dd>
                   </div>
                   <div className="border-ink-200 border-b pb-5">
-                    <dt className="text-ink-500 text-xs font-semibold tracking-[0.18em] uppercase">
+                    <dt className="text-ink-600 text-xs font-semibold tracking-[0.18em] uppercase">
                       Branch
                     </dt>
                     <dd className="font-display text-ink-900 mt-2 text-xl">
@@ -80,12 +80,12 @@ export default function AboutPage() {
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-ink-500 text-xs font-semibold tracking-[0.18em] uppercase">
+                    <dt className="text-ink-600 text-xs font-semibold tracking-[0.18em] uppercase">
                       What the business sells
                     </dt>
                     <dd className="font-display text-ink-900 mt-2 text-xl">
                       Household items, kitchen equipment and home appliances
-                      <span className="text-ink-500 mt-1 block font-sans text-sm">
+                      <span className="text-ink-600 mt-1 block font-sans text-sm">
                         Five ranges, sold from two Lagos locations
                       </span>
                     </dd>

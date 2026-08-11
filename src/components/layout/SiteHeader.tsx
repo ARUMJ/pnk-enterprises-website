@@ -112,7 +112,7 @@ export default function SiteHeader() {
           <span className="font-display text-ink-900 text-lg tracking-tight sm:text-xl">
             PNK<span className="text-brass-600">.</span>
           </span>
-          <span className="text-ink-500 mt-1 text-[0.6rem] font-semibold tracking-[0.22em] uppercase">
+          <span className="text-ink-600 mt-1 text-[0.6rem] font-semibold tracking-[0.22em] uppercase">
             Enterprises
           </span>
         </Link>
@@ -205,7 +205,7 @@ export default function SiteHeader() {
                     <span className="font-display text-ink-900 text-xl">
                       {item.label}
                     </span>
-                    <span className="text-ink-500 text-sm">
+                    <span className="text-ink-600 text-sm">
                       {item.description}
                     </span>
                   </Link>

@@ -85,7 +85,7 @@ export default function MediaFrame({
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
         {fallback}
         {reservedLabel ? (
-          <p className="text-ink-500 max-w-[22ch] text-[0.7rem] leading-relaxed tracking-wide uppercase">
+          <p className="text-ink-600 max-w-[22ch] text-[0.7rem] leading-relaxed tracking-wide uppercase">
             {reservedLabel}
           </p>
         ) : null}

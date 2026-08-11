@@ -41,8 +41,10 @@ export default function EnquiryPanel({
     ? "border-bone/15 bg-bone/[0.04]"
     : "border-ink-200 bg-white";
   const headingColour = isDark ? "text-bone" : "text-ink-900";
-  const bodyColour = isDark ? "text-ink-300" : "text-ink-600";
-  const outcomeColour = isDark ? "text-ink-400" : "text-ink-500";
+  const bodyColour = isDark ? "text-ink-200" : "text-ink-700";
+  // Small supporting text: needs >= 4.5:1. ink-500 on white is only 4.88 and
+  // drops below AA on bone-dark, so use ink-600 (>= 6.2:1 on every surface).
+  const outcomeColour = isDark ? "text-ink-300" : "text-ink-600";
 
   return (
     <div
@@ -67,11 +69,8 @@ export default function EnquiryPanel({
               <ButtonLink
                 href={channel.href}
                 size="lg"
-                className={
-                  isDark
-                    ? "bg-bone text-ink-950 hover:bg-brass-100 w-full sm:w-auto"
-                    : "w-full sm:w-auto"
-                }
+                variant={isDark ? "inverse" : "primary"}
+                className="w-full sm:w-auto"
               >
                 {channel.label}
               </ButtonLink>
@@ -79,12 +78,8 @@ export default function EnquiryPanel({
               <ButtonLink
                 href={channel.href}
                 size="lg"
-                variant="secondary"
-                className={
-                  isDark
-                    ? "border-bone/25 text-bone hover:border-bone/60 hover:bg-bone/[0.06] w-full sm:w-auto"
-                    : "w-full sm:w-auto"
-                }
+                variant={isDark ? "inverseOutline" : "secondary"}
+                className="w-full sm:w-auto"
               >
                 {channel.label}
               </ButtonLink>

@@ -29,10 +29,10 @@ export default function Breadcrumbs({
 
   const linkTone =
     tone === "dark"
-      ? "text-ink-300 hover:text-bone"
-      : "text-ink-500 hover:text-ink-900";
+      ? "text-ink-200 hover:text-bone"
+      : "text-ink-600 hover:text-ink-900";
   const currentTone = tone === "dark" ? "text-bone" : "text-ink-900";
-  const dividerTone = tone === "dark" ? "text-ink-500" : "text-ink-400";
+  const dividerTone = tone === "dark" ? "text-ink-400" : "text-ink-500";
 
   return (
     <>

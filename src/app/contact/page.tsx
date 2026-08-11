@@ -80,7 +80,7 @@ export default function ContactPage() {
               </Reveal>
 
               <Reveal delay={80}>
-                <h3 className="text-ink-500 mt-8 text-xs font-semibold tracking-[0.18em] uppercase">
+                <h3 className="text-ink-600 mt-8 text-xs font-semibold tracking-[0.18em] uppercase">
                   Phone numbers
                 </h3>
                 <ul className="mt-4 space-y-3">
@@ -99,14 +99,14 @@ export default function ContactPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-ink-500 mt-3 text-sm">
+                <p className="text-ink-600 mt-3 text-sm">
                   All three numbers reach the business. Selecting one opens your
                   phone app to dial it.
                 </p>
               </Reveal>
 
               <Reveal delay={140}>
-                <h3 className="text-ink-500 mt-10 text-xs font-semibold tracking-[0.18em] uppercase">
+                <h3 className="text-ink-600 mt-10 text-xs font-semibold tracking-[0.18em] uppercase">
                   Email
                 </h3>
                 <a
@@ -118,7 +118,7 @@ export default function ContactPage() {
               </Reveal>
 
               <Reveal delay={200}>
-                <h3 className="text-ink-500 mt-10 text-xs font-semibold tracking-[0.18em] uppercase">
+                <h3 className="text-ink-600 mt-10 text-xs font-semibold tracking-[0.18em] uppercase">
                   Social media
                 </h3>
                 <ul className="text-ink-600 mt-4 space-y-2 text-sm">
@@ -129,7 +129,7 @@ export default function ContactPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-ink-500 mt-3 text-xs">
+                <p className="text-ink-600 mt-3 text-xs">
                   Profile links will be added once the official profile URLs are
                   confirmed.
                 </p>
@@ -158,11 +158,11 @@ export default function ContactPage() {
               ))}
 
               <Reveal delay={240}>
-                <p className="text-ink-500 mt-8 text-sm leading-relaxed">
+                <p className="text-ink-600 mt-8 text-sm leading-relaxed">
                   Opening hours have not been supplied yet. Please call ahead
                   before visiting.
                 </p>
-                <p className="text-ink-500 mt-3 text-sm leading-relaxed">
+                <p className="text-ink-600 mt-3 text-sm leading-relaxed">
                   The business also sells and supplies to different states
                   within Nigeria.
                 </p>

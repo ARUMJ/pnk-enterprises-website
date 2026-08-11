@@ -34,7 +34,7 @@ export default function Heritage() {
             </p>
           </Reveal>
           <Reveal delay={200}>
-            <p className="text-ink-500 mx-auto mt-4 max-w-xl text-sm">
+            <p className="text-ink-600 mx-auto mt-4 max-w-xl text-sm">
               1998 (owner-stated; not independently verified)
             </p>
           </Reveal>

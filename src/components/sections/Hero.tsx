@@ -74,19 +74,10 @@ export default function Hero() {
               style={{ "--enter-delay": "320ms" }}
               className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <ButtonLink
-                href="/products"
-                size="lg"
-                className="bg-bone text-ink-950 hover:bg-brass-100"
-              >
+              <ButtonLink href="/products" size="lg" variant="inverse">
                 Explore the range
               </ButtonLink>
-              <ButtonLink
-                href="/contact"
-                size="lg"
-                variant="secondary"
-                className="border-bone/25 text-bone hover:border-bone/60 hover:bg-bone/[0.06]"
-              >
+              <ButtonLink href="/contact" size="lg" variant="inverseOutline">
                 Contact the business
               </ButtonLink>
             </div>
@@ -94,11 +85,14 @@ export default function Hero() {
             <p
               data-enter
               style={{ "--enter-delay": "400ms" }}
-              className="text-ink-400 mt-8 text-sm"
+              className="text-ink-300 mt-8 text-sm"
             >
               Trading as {""}
-              <span className="text-ink-300">PETER N KABAI ENTERPRISES</span> ·
-              Branch: <span className="text-ink-300">CLAREAN PEEKAN LTD</span>
+              <span className="text-bone font-medium">
+                PETER N KABAI ENTERPRISES
+              </span>{" "}
+              · Branch:{" "}
+              <span className="text-bone font-medium">CLAREAN PEEKAN LTD</span>
             </p>
           </div>
 
@@ -130,7 +124,7 @@ export default function Hero() {
                     <p className="font-display text-bone text-lg leading-tight">
                       {category.name}
                     </p>
-                    <p className="text-ink-400 mt-1 text-xs leading-relaxed">
+                    <p className="text-ink-300 mt-1 text-xs leading-relaxed">
                       {categoryGroupNames(category).slice(0, 2).join(" · ")}
                     </p>
                   </div>
@@ -138,7 +132,7 @@ export default function Hero() {
               ))}
             </div>
 
-            <p className="text-ink-500 mt-8 text-center text-[0.7rem] tracking-[0.14em] uppercase">
+            <p className="text-ink-400 mt-8 text-center text-[0.7rem] tracking-[0.14em] uppercase">
               Product photography to be added
             </p>
           </div>
