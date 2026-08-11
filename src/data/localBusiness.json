@@ -1,0 +1,47 @@
+{
+  "name": "PNK ENTERPRISES",
+  "legalName": "PETER N KABAI ENTERPRISES",
+  "branchName": "CLAREAN PEEKAN LTD",
+  "description": "Supplier of household items, vacuum flasks (food and water), coolers, kitchen equipment such as pots and cutlery sets, and home appliances including toasters, blenders, microwave ovens and air fryers.",
+  "productCategories": [
+    "Household items",
+    "Vacuum flasks (food & water)",
+    "Coolers",
+    "Kitchen equipment (pots, cutlery sets)",
+    "Home appliances (toasters, blenders, microwave ovens, air fryers)"
+  ],
+  "addresses": {
+    "main": {
+      "label": "Main address",
+      "streetAddress": "35, Isale Agbede Street, off Idumagbo Avenue",
+      "addressLocality": "Lagos Island",
+      "addressRegion": "Lagos",
+      "addressCountry": "NG",
+      "formatted": "35, Isale Agbede Street, off Idumagbo Avenue, Lagos Island, Lagos, Nigeria"
+    },
+    "branch": {
+      "label": "Branch address",
+      "streetAddress": "Merciful Line (113 and 114), Ebute Ero Market",
+      "addressLocality": "Idumota",
+      "addressRegion": "Lagos",
+      "addressCountry": "NG",
+      "formatted": "Merciful Line (113 and 114), Ebute Ero Market, Idumota, Lagos, Nigeria"
+    }
+  },
+  "phones": ["08104279284", "08033150192", "08055642498"],
+  "email": "peterkabainwabunma@gmail.com",
+  "socialProfiles": [
+    { "platform": "Facebook", "handle": "Peter Kabai Jr", "url": null },
+    { "platform": "Instagram", "handle": "@kabaijr", "url": null },
+    {
+      "platform": "LinkedIn",
+      "handle": "Peter Ikechukwu Kabai-Nwabunma",
+      "url": null
+    }
+  ],
+  "distribution": {
+    "current": "Sells and supplies to different states within Nigeria.",
+    "aspiration": "Aspires to expand exports outside Nigeria."
+  },
+  "historyNote": "Owner states that the business began in 1998; this has not been independently verified."
+}
