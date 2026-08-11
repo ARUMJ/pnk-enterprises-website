@@ -344,10 +344,13 @@ above.
 6. **No geo coordinates** in structured data, so no map embed.
 7. **Product listings are category-level placeholders**, never presented as real,
    priced or in-stock products.
-8. **Browser-based visual regression testing was not possible** — the sandbox
-   cannot reach the Playwright browser CDN. Verification was done against
-   rendered HTML and compiled CSS instead. A visual pass on the Vercel Preview
-   in a real browser is still recommended.
+8. **Browser-based visual verification was not possible from the build sandbox.**
+   The Playwright browser CDN is unreachable, and all `*.vercel.app` hosts fail
+   the TLS handshake from that network, so the Preview could not be fetched
+   there either. Verification was therefore done against locally rendered HTML
+   and compiled CSS, plus Vercel's own deployment status. **A human visual pass
+   on the Preview URL in a real browser is still recommended** before the site
+   is shown to the client.
 
 ---
 
@@ -451,6 +454,6 @@ prices, stock availability, or export capability.
 
 **LAST UPDATED:** 2026-08-11
 **CURRENT PHASE:** Phase 2 — Real Design / Experience (complete)
-**CURRENT DEV COMMIT:** see `git log -1 --oneline dev` (this file is committed as part of the Phase 2 commit)
-**VERCEL PREVIEW STATUS:** Preview deployment expected from the Phase 2 commit on `dev`; verify Ready before client review
+**CURRENT DEV COMMIT:** `b7855595842689b5f505c6c60fd4ab8c7d82ce83` — "feat: real design system, motion, navigation and content pages"
+**VERCEL PREVIEW STATUS:** Ready / success — https://pnk-enterprises-website-meigv0ayl-gospelboys.vercel.app
 **NEXT ACTION:** Obtain real product photography and brand assets from the client (§17), then begin Phase 3 (§18)
