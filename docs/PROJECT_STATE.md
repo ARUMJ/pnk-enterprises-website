@@ -899,10 +899,11 @@ prices, stock availability, or export capability.
 
 **LAST UPDATED:** 2026-08-11
 **CURRENT PHASE:** Phase 3D — Premium CEO / Founder Portrait (complete, integrated). Phase 3C (visual enhancement & art direction) complete before it.
-**CURRENT DEV COMMIT:** see `git log -1` on `dev`; the Phase 3D commit is "feat: approved CEO founder portrait (refined Variant B) on the About page". The previous phase ended at `6cdd0a5` (docs) / `c3f9a4e` (Phase 3C code).
+**CURRENT DEV COMMIT:** `170482b4b68d040dd5d6318962ffdc2634f6be94` — "feat: approved CEO founder portrait (refined Variant B) on the About page". The previous phase ended at `6cdd0a5` (docs) / `c3f9a4e` (Phase 3C code).
 **CURRENT DEV STATE:** `dev` is ahead of `main`; `main` remains untouched at `522ded38ab099b6e80f29f9938d6cfaeeb97f116`. No PR, no merge to `main`, no rewritten history. Working tree clean.
-**CI STATUS:** Phase 3C ran green (GitHub Actions `31523486815`). Phase 3D was validated locally against all four gates — lint, typecheck, format check, production build (15 routes) — before commit; check the latest run on `dev` for its CI result.
-**VERCEL PREVIEW URL:** Phase 3C Preview was https://pnk-enterprises-website-mj05xtr4h-gospelboys.vercel.app (deployment `5856397866`, success). Phase 3D produces a new Preview on push to `dev`. Note: `*.vercel.app` is TLS-blocked from the build sandbox — read deployment state via `gh api repos/{owner}/{repo}/deployments/{id}/statuses`, not by fetching the URL.
+**CI STATUS:** GitHub Actions run `31534170836` — **success** (Build, lint and typecheck; all four gates also run locally before the commit: lint, typecheck, format check, production build of 15 routes). Phase 3C ran green at `31523588605`.
+**VERCEL PREVIEW URL:** https://pnk-enterprises-website-pm8kjbwn1-gospelboys.vercel.app (Vercel deployment `5858281968`, state `success`). Phase 3C Preview was https://pnk-enterprises-website-mj05xtr4h-gospelboys.vercel.app. Note: `*.vercel.app` is TLS-blocked from the build sandbox — read deployment state via `gh api repos/{owner}/{repo}/deployments/{id}/statuses`, not by fetching the URL.
+**DEPLOYED WHERE:** Preview only. Nothing from Phase 3B, 3C or 3D is in production, because `main` has never been advanced and there is no production domain yet.
 
 **THE FOUNDER PORTRAIT — the one thing not to get wrong:**
 The live portrait is the client's **real, unaltered face** composited into an
