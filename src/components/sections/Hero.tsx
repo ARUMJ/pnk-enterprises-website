@@ -138,25 +138,31 @@ export default function Hero() {
                 <figure
                   key={shot.src}
                   className={[
-                    "pnk-float border-bone/10 bg-bone/[0.045] relative overflow-hidden rounded-(--radius-lg) border backdrop-blur-sm",
+                    "pnk-float",
                     index % 2 === 1 ? "translate-y-6" : "",
                   ].join(" ")}
                   style={{ "--float-delay": `${index * 900}ms` }}
                 >
-                  <Image
-                    src={shot.src}
-                    alt={shot.alt}
-                    width={1000}
-                    height={1000}
-                    priority={index === 0}
-                    sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
-                    className="aspect-square w-full object-cover"
-                  />
-                  <figcaption className="from-ink-950 via-ink-950/85 absolute inset-x-0 bottom-0 bg-gradient-to-t to-transparent px-4 pt-12 pb-3">
-                    <span className="text-bone text-xs font-medium tracking-wide">
-                      {shot.label}
-                    </span>
-                  </figcaption>
+                  {/* The ambient drift above owns `transform`; this element
+                      owns `translate` and the image owns `scale`. Separate
+                      properties, so the float and the hover never fight.
+                      See the HERO TILE INTERACTION block in globals.css. */}
+                  <div className="pnk-tile border-bone/10 bg-bone/[0.045] relative overflow-hidden rounded-(--radius-lg) border backdrop-blur-sm">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      width={1000}
+                      height={1000}
+                      priority={index === 0}
+                      sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
+                      className="pnk-tile-media aspect-square w-full object-cover"
+                    />
+                    <figcaption className="from-ink-950 via-ink-950/85 absolute inset-x-0 bottom-0 bg-gradient-to-t to-transparent px-4 pt-12 pb-3">
+                      <span className="text-bone text-xs font-medium tracking-wide">
+                        {shot.label}
+                      </span>
+                    </figcaption>
+                  </div>
                 </figure>
               ))}
             </div>

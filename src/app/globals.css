@@ -195,6 +195,73 @@
 }
 
 /* --------------------------------------------------------------------------
+   HERO TILE INTERACTION
+   The hero composition responds to the pointer, so the largest surface on the
+   site is not the only one that ignores the user.
+
+   TRANSFORM OWNERSHIP — read before editing.
+   `.pnk-float` above animates `transform` on the *outer* <figure>. A hover
+   transform on that same element would be overwritten by every keyframe tick,
+   which reads as jitter and snapping. So the two responsibilities live on two
+   different elements and never touch the same property:
+
+       figure.pnk-float   -> ambient drift        (owns `transform`)
+       └── .pnk-tile      -> interactive response (owns `translate`)
+           └── .pnk-tile-media -> image response  (owns `scale`)
+
+   `translate` and `scale` are independent CSS properties in Tailwind v4, so
+   they compose with the ambient `transform` instead of fighting it. Keep it
+   that way.
+
+   Hover is gated behind a fine pointer: touch devices must not be left with a
+   tile stuck in its elevated state after a tap.
+   -------------------------------------------------------------------------- */
+
+.pnk-tile {
+  transition:
+    translate var(--duration-base) var(--ease-out-quint),
+    border-color var(--duration-base) var(--ease-out-quint),
+    background-color var(--duration-base) var(--ease-out-quint),
+    box-shadow var(--duration-base) var(--ease-out-quint);
+}
+
+.pnk-tile-media {
+  transition: scale var(--duration-slow) var(--ease-out-quint);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pnk-tile:hover {
+    translate: 0 -0.375rem;
+    border-color: color-mix(in oklab, var(--color-bone) 26%, transparent);
+    background-color: color-mix(in oklab, var(--color-bone) 9%, transparent);
+    box-shadow: 0 26px 50px -32px rgba(0, 0, 0, 0.85);
+  }
+
+  .pnk-tile:hover .pnk-tile-media {
+    scale: 1.03;
+  }
+}
+
+/* Reduced motion: keep the feedback, drop the movement. Border and background
+   still confirm the pointer is over a tile, so the interaction remains legible
+   without anything actually moving. */
+@media (prefers-reduced-motion: reduce) {
+  .pnk-tile,
+  .pnk-tile-media {
+    transition: none !important;
+  }
+
+  .pnk-tile:hover {
+    translate: none !important;
+    box-shadow: none !important;
+  }
+
+  .pnk-tile:hover .pnk-tile-media {
+    scale: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
    REDUCED MOTION
    Users who ask for reduced motion get the full content immediately, with no
    transforms, no ambient animation and no scroll-linked movement. Only
@@ -224,6 +291,24 @@
 
   .pnk-float {
     animation: none !important;
+  }
+
+  /* Tailwind v4 emits `translate`, `scale` and `rotate` as discrete CSS
+     properties rather than folding them into `transform`. The
+     `motion-reduce:transform-none` guards written throughout the UI
+     (buttons, cards, media, icons) therefore set `transform: none` on
+     elements whose movement actually comes from `translate`/`scale`, and
+     silently failed to suppress it — a hovered button still jumped.
+
+     Rather than rewrite every call site, extend the guard those components
+     already opted into so it means what its authors intended. The attribute
+     selector avoids class-name escaping and stays readable. */
+  [class~="motion-reduce:transform-none"],
+  [class~="motion-reduce:transform-none"]:hover,
+  .group:hover [class~="motion-reduce:transform-none"] {
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
   }
 }
 
