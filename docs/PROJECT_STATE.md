@@ -1089,3 +1089,31 @@ Never regenerate, replace, reshape or beauty-filter that face; re-verify
 identity by pupil-normalised RMSE after any edit. Full record in **§18A**.
 
 **NEXT ACTION:** Client review of the Phase 3D Preview (`/about`, founder portrait, desktop and mobile). Then the dedicated motion and interaction phase (§18.6). Nothing is merged to `main` and nothing is in production.
+
+### 18B.11 Shipping record
+
+| Item          | Value                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------ |
+| Commit        | `0b3ece3639c2b1b2fb6512abb37582eeb887998a`                                                             |
+| Branch        | `dev` (`f104374` -> `0b3ece3`)                                                                         |
+| `main`        | `522ded38ab099b6e80f29f9938d6cfaeeb97f116` — **untouched**                                             |
+| CI run        | [31538968612](https://github.com/ARUMJ/pnk-enterprises-website/actions/runs/31538968612) — **success** |
+| Preview       | https://pnk-enterprises-website-p54dj4ksd-gospelboys.vercel.app                                        |
+| Deployment id | `5859114512` (Preview, state `success`)                                                                |
+| Date          | 2026-08-11                                                                                             |
+
+Files changed (4): `public/images/owner/owner-portrait.webp`,
+`public/images/owner/owner-portrait.jpg`,
+`src/components/sections/OwnerPortrait.tsx`, `docs/PROJECT_STATE.md`.
+
+Pre-commit verification: lint, typecheck, format check and production build
+all pass (15 routes); the portrait resolves at both the raw path and through
+`/_next/image`; 120 image references across all 9 routes return 200; reviewed
+at 520 px desktop and 360 px mobile.
+
+**Note for the next agent — a stale-cache trap.** Because the swap reuses the
+same filename, `next start` served the OLD portrait from `.next/cache/images`
+long after the file on disk had changed. If you replace an image and the page
+still shows the previous one, `rm -rf .next/cache/images` before concluding
+anything. `.next` is gitignored and Vercel builds clean, so this only ever
+affects local verification — but it will fool you.
