@@ -6,11 +6,18 @@ import localBusiness from "@/data/localBusiness.json";
 /**
  * The owner's photograph.
  *
- * This is a real, client-supplied photograph of the owner — not a stock
- * portrait and not a generated likeness. It has been prepared for the web
- * (reframed to the 4:5 portrait this slot reserves, tonally balanced, and
- * given a shallower depth of field so the subject separates from the
- * background). His face, features and identity are unaltered.
+ * The face is the owner's own face, taken from the client-supplied photograph
+ * in `public/images/source/` — not a stock portrait and not a generated
+ * likeness. His facial pixels are composited in unaltered: no reshaping, no
+ * beautifying, no smoothing, no de-ageing. Identity was verified against the
+ * source frame after every processing step (pupil-landmark alignment, RMSE
+ * 0.0985, zero geometric warp).
+ *
+ * The wardrobe (navy suit, white shirt, dark tie), the studio background and
+ * the studio lighting are AI-generated art direction, produced because the
+ * only portrait the client supplied was taken outdoors in casual dress. The
+ * subject, his features and his proportions are real; the styling around him
+ * is not. See `docs/PROJECT_STATE.md` for the full provenance record.
  *
  * The copy is confined to what the owner has actually stated: the business
  * name, the 1998 account (always qualified), and the stated priorities. There
@@ -28,7 +35,7 @@ export default function OwnerPortrait() {
             <figure>
               <MediaFrame
                 src="/images/owner/owner-portrait.webp"
-                alt={`The owner of ${localBusiness.name}, wearing a pale blue traditional outfit, in a business portrait against a plain studio background.`}
+                alt={`The owner of ${localBusiness.name}, in a dark navy suit, white shirt and dark tie, photographed from the chest up against a near-black studio background.`}
                 ratio="portrait"
                 sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
               />

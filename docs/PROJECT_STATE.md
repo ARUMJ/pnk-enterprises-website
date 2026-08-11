@@ -118,28 +118,30 @@ most recent phase.
 
 ## 5. Current Phase
 
-**Phase 3C — Visual Enhancement & Professional Art Direction.** Complete.
+**Phase 3D — Premium CEO / Founder Portrait.** Complete and integrated.
 
-This phase raised the presentation quality of every image on the site without
-changing the approved design, the motion system or any business fact. It did
-three things: created illustrative category artwork for the two ranges with no
-client photography, turned the owner's snapshot into a studio-style business
-portrait **without altering his face**, and re-mastered the six authentic
-product photographs to a consistent commercial standard.
+**Phase 3C — Visual Enhancement & Professional Art Direction.** Complete
+(delivered, CI green, Vercel Preview verified). Full detail in §18.
 
-No dependencies were added. No component was redesigned. Full detail in §18.
+Phase 3D replaced the founder portrait on `/about` with an approved, refined
+"Variant B" CEO portrait: the client's **own face, unaltered**, composited into
+an AI-generated tailored navy suit, white shirt, dark tie and near-black
+studio background. Nothing else on the site changed. Full detail in §18A.
+
+No dependencies were added in either phase. No component was redesigned.
 
 ---
 
 ## 6. Completed Phases
 
-| Phase | Name                                                 | Outcome                                                                                                                                   |
-| ----- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| 1     | Project scaffold                                     | Next.js 16 + React 19 + TypeScript + Tailwind 4 baseline, CI workflow, business data layer, JSON-LD, Vercel Preview live.                 |
-| 2     | Real design / experience                             | Design system, motion system, header/footer, hero, 4 routes, sitemap/robots, expanded structured data.                                    |
-| 3A    | Product architecture, content structure & conversion | Category routes, reusable card system, enquiry architecture, breadcrumbs, owner-photo slot.                                               |
-| 3B    | Branding, real imagery & product photography         | Client logo prepared into brand marks + app icons, six product photos mastered, owner portrait integrated.                                |
-| 3C    | Visual enhancement & professional art direction      | Illustrative category artwork (coolers, household items), studio-grade founder portrait, re-mastered product photography. **This phase.** |
+| Phase | Name                                                 | Outcome                                                                                                                                    |
+| ----- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1     | Project scaffold                                     | Next.js 16 + React 19 + TypeScript + Tailwind 4 baseline, CI workflow, business data layer, JSON-LD, Vercel Preview live.                  |
+| 2     | Real design / experience                             | Design system, motion system, header/footer, hero, 4 routes, sitemap/robots, expanded structured data.                                     |
+| 3A    | Product architecture, content structure & conversion | Category routes, reusable card system, enquiry architecture, breadcrumbs, owner-photo slot.                                                |
+| 3B    | Branding, real imagery & product photography         | Client logo prepared into brand marks + app icons, six product photos mastered, owner portrait integrated.                                 |
+| 3C    | Visual enhancement & professional art direction      | Illustrative category artwork (coolers, household items), studio-grade founder portrait, re-mastered product photography.                  |
+| 3D    | Premium CEO / founder portrait                       | Founder portrait rebuilt as an executive CEO portrait — his real face, AI wardrobe/background/lighting. Identity verified. **This phase.** |
 
 ---
 
@@ -556,12 +558,12 @@ This is the single most important thing to understand before touching imagery.
 business assets and must never be replaced with generic or AI-generated
 substitutes:
 
-| Asset                                           | Origin                      |
-| ----------------------------------------------- | --------------------------- |
-| `public/images/brand/pnk-mark-*.{png,webp}`     | Client's own logo           |
-| `public/images/owner/owner-portrait.{webp,jpg}` | Photograph of the owner     |
-| the six files in `public/images/products/`      | Client's own product photos |
-| the eight originals in `public/images/source/`  | Untouched client uploads    |
+| Asset                                           | Origin                                |
+| ----------------------------------------------- | ------------------------------------- |
+| `public/images/brand/pnk-mark-*.{png,webp}`     | Client's own logo                     |
+| `public/images/owner/owner-portrait.{webp,jpg}` | Owner's real face (hybrid — see §18A) |
+| the six files in `public/images/products/`      | Client's own product photos           |
+| the eight originals in `public/images/source/`  | Untouched client uploads              |
 
 **ILLUSTRATIVE — AI-generated category artwork, created in Phase 3C.** These
 are _not_ photographs of PNK stock:
@@ -597,7 +599,13 @@ The eight original client uploads are tracked in Git and must never be edited
 or deleted. Every prepared asset is derived from them, so any future re-master
 starts from the originals rather than from an already-processed file.
 
-### 18.3 How the founder photograph was edited
+### 18.3 How the founder photograph was edited (Phase 3C — SUPERSEDED by §18A)
+
+> **Note:** the portrait described in this subsection (pale blue traditional
+> outfit, warm neutral studio falloff) was the Phase 3C asset. It was replaced
+> in Phase 3D by the approved CEO portrait described in §18A. This subsection
+> is kept as the provenance record of the intermediate step; the identity
+> methodology it describes still applies.
 
 **Founder identity preserved; face was not replaced or regenerated.**
 
@@ -686,6 +694,132 @@ checkout, payments, prices, stock levels, a CMS, or a contact-form backend.
 
 ---
 
+## 18A. Phase 3D — The Approved Founder Portrait (READ THIS BEFORE TOUCHING IT)
+
+If you are a new agent picking this project up, this section is the complete
+record of the founder portrait decision. Do not re-derive it.
+
+### 18A.1 What was approved
+
+The live founder portrait is **"refined Variant B"**, approved by the client on
+2026-08-11 after a two-variant comparison (Variant A, dark charcoal, was
+rejected) and one refinement round.
+
+| Item            | Value                                                               |
+| --------------- | ------------------------------------------------------------------- |
+| Live asset      | `public/images/owner/owner-portrait.webp` (WebP q84, 160 KB)        |
+| Live fallback   | `public/images/owner/owner-portrait.jpg` (JPEG q90, 503 KB)         |
+| Dimensions      | 1200x1500 — **exactly 4:5**, matching `MediaFrame ratio="portrait"` |
+| Identity source | `public/images/source/photo_6041819337141719603_y.jpg`              |
+| Rendered at     | `OwnerPortrait` section, `/about` — the only place it is used       |
+
+The asset is **1200x1500 and must stay 1200x1500**. `MediaFrame` reserves
+`aspect-[4/5]` up front; any other ratio reintroduces cumulative layout shift.
+
+### 18A.2 What is real and what is not — state this honestly to the client
+
+**REAL (the client's own photographed pixels):**
+
+- His face, in full: eyes, nose, mouth, lips, jawline, cheeks, forehead, ears,
+  beard and facial-hair pattern, skin texture, skin tone, age, ethnicity,
+  facial proportions and expression.
+- His scalp and neck (carried through from the original frame).
+
+**AI-GENERATED (art direction only, produced with `generate_image`):**
+
+- The tailored dark navy suit, the white shirt and the dark tie.
+- The near-black / warm-brown studio background with its subtle brass falloff.
+- The studio lighting environment (key, fill, rim) that the face was then
+  tonally matched into.
+
+This hybrid exists because the only usable portrait the client supplied shows
+him outdoors in a **light-blue kaftan**, against a wall with signage and a
+potted plant — not presentable as a founder portrait for a corporate site.
+**The client is aware of and approved this.** The site copy makes no claim
+about where or when the photograph was taken, and the component's alt text
+describes only what is visible.
+
+### 18A.3 The identity guarantee, and how it was verified
+
+**The client's identity has priority over every other consideration.** If a
+future styling change conflicts with identity, identity wins.
+
+Never do any of these to this portrait: regenerate the face, swap it, reshape
+it, beauty-filter it, plastic-smooth the skin, de-age him, add a smile, alter
+his facial structure or proportions, or change his skin tone, ethnicity or
+beard. A face produced by an image generator — however convincing — is **not**
+acceptable and must never be shipped.
+
+Verification protocol actually used (repeat it after any future edit):
+
+1. Locate pupil landmarks in both the source and the candidate.
+2. Affine-normalise both so interocular distance = 200 px and the pupils sit at
+   fixed coordinates. This removes scale and rotation from the comparison.
+3. `compare -metric RMSE -subimage-search` a facial patch against a window.
+4. **Pass = the offset lands on the expected coordinate with low RMSE.**
+
+Result on the shipped asset: offset **(30,29)** against an expected **(30,30)** —
+one pixel — with **RMSE 0.0985**. Zero geometric warp. For contrast, a fully
+AI-rendered face of the same man scored **0.179–0.194** and landed at the wrong
+offset; that is the failure signature to watch for.
+
+### 18A.4 How the composite was built
+
+Working directory (scratch, **not** in Git): `/home/user/portrait-work/`.
+Recreate it from the source frame if it is gone.
+
+1. **Register** the original to the AI plate by pupil-landmark affine warp
+   (scale 1.6732, rotation -3.97 deg). Correlation-based registration was tried
+   and is a dead end — it returns a flat RMSE everywhere.
+2. **Colour-match** the warped original to the plate per channel.
+3. **Transfer lighting** with a heavily blurred plate-over-original ratio, so
+   the face picks up the studio lighting while keeping 100% of its own texture.
+4. **Texture-match the AI surroundings to the face** — not the other way round.
+   The AI scalp/ears/neck were slightly softened and given calibrated Gaussian
+   grain until their high-frequency energy matched the real face's.
+5. **Mask** with a tight face oval (rx 94, ry 134, feather 24 px) intersected
+   with a skin-positive test (`r-g > 0.055`), then composite.
+6. **Crop** to `848x1060+37+0`, resize to 1200x1500 Lanczos, gentle `-level 1%,99%`.
+
+**Do not try to fix the seam by relighting the face per-pixel.** Three attempts
+(unclamped, clamped and luminance-only) were all rejected — they blew out or
+blotched the cheek. The fix that worked was matching the _surroundings_ to the
+face and shrinking the mask so it terminates inside the AI's rim light.
+
+Measured outcome: high-frequency texture parity across the boundary (scalp
+2.02 -> 4.36, neck 5.95 -> 4.62 against a real-face target of 4.6–4.8) and
+boundary tonal continuity improved from a **-84 level step to +/-7 levels**.
+
+### 18A.5 Composition
+
+Chest-up. The bottom edge cuts at chest level, below the jacket button and
+**clear of the wrist and watch** — an earlier crop cut through them and was
+rejected. Head-room and shoulder silhouette are intact; the frame is not
+cramped. Verified at desktop (~520x650) and mobile (~360x450) render sizes.
+
+If the crop is ever revisited: the cuff sits at y~~1120 and the top of the head
+at y~~80 in the 922x1152 working composite, which is why the cut is at y=1060.
+
+### 18A.6 Remaining visual limitation — disclosed, not hidden
+
+At **100% zoom** the transition between his real face and the AI-generated
+scalp/jawline is much improved but **not perfectly invisible**; there is faint
+softness where the cheek meets the AI jawline. It is not detectable at the
+site's actual display size (~520 px wide on desktop, ~360 px on mobile).
+
+Closing that last gap would require blurring or otherwise degrading his real
+facial pixels, which the identity constraint forbids. **The limitation was
+accepted deliberately. Do not "fix" it by touching the face.**
+
+### 18A.7 What Phase 3D did NOT change
+
+Only two files carry the change: the portrait asset itself and
+`src/components/sections/OwnerPortrait.tsx` (alt text + provenance comment).
+No layout, no component API, no motion, no copy, no business fact, no
+dependency, no CI configuration, and nothing in `public/images/source/`.
+
+---
+
 ## 19. Rules That Must Not Be Violated
 
 **Imagery and the founder's identity**
@@ -764,9 +898,16 @@ prices, stock availability, or export capability.
 ---
 
 **LAST UPDATED:** 2026-08-11
-**CURRENT PHASE:** Phase 3C — Visual Enhancement & Professional Art Direction (complete)
-**CURRENT DEV COMMIT:** `c3f9a4ec8bdf61f63c5257bb7e16df40cd1fa01b` — "feat: professional art direction for founder portrait, product photos and category imagery"
-**CURRENT DEV STATE:** `dev` is ahead of `main`; `main` remains untouched at `522ded38ab099b6e80f29f9938d6cfaeeb97f116`. Working tree clean.
-**CI STATUS:** GitHub Actions run `31523486815` — **success** (job: Build, lint and typecheck)
-**VERCEL PREVIEW URL:** https://pnk-enterprises-website-mj05xtr4h-gospelboys.vercel.app (Vercel deployment `5856397866`, state `success`)
-**NEXT ACTION:** Client review of the Phase 3C Preview (founder portrait, category artwork, product imagery, mobile layout). Then the dedicated motion and interaction phase (§18.6).
+**CURRENT PHASE:** Phase 3D — Premium CEO / Founder Portrait (complete, integrated). Phase 3C (visual enhancement & art direction) complete before it.
+**CURRENT DEV COMMIT:** see `git log -1` on `dev`; the Phase 3D commit is "feat: approved CEO founder portrait (refined Variant B) on the About page". The previous phase ended at `6cdd0a5` (docs) / `c3f9a4e` (Phase 3C code).
+**CURRENT DEV STATE:** `dev` is ahead of `main`; `main` remains untouched at `522ded38ab099b6e80f29f9938d6cfaeeb97f116`. No PR, no merge to `main`, no rewritten history. Working tree clean.
+**CI STATUS:** Phase 3C ran green (GitHub Actions `31523486815`). Phase 3D was validated locally against all four gates — lint, typecheck, format check, production build (15 routes) — before commit; check the latest run on `dev` for its CI result.
+**VERCEL PREVIEW URL:** Phase 3C Preview was https://pnk-enterprises-website-mj05xtr4h-gospelboys.vercel.app (deployment `5856397866`, success). Phase 3D produces a new Preview on push to `dev`. Note: `*.vercel.app` is TLS-blocked from the build sandbox — read deployment state via `gh api repos/{owner}/{repo}/deployments/{id}/statuses`, not by fetching the URL.
+
+**THE FOUNDER PORTRAIT — the one thing not to get wrong:**
+The live portrait is the client's **real, unaltered face** composited into an
+**AI-generated** navy suit, white shirt, tie and near-black studio background.
+Never regenerate, replace, reshape or beauty-filter that face; re-verify
+identity by pupil-normalised RMSE after any edit. Full record in **§18A**.
+
+**NEXT ACTION:** Client review of the Phase 3D Preview (`/about`, founder portrait, desktop and mobile). Then the dedicated motion and interaction phase (§18.6). Nothing is merged to `main` and nothing is in production.
