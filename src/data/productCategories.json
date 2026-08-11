@@ -1,51 +1,157 @@
 {
-  "note": "Product CATEGORIES only. These are the categories confirmed in docs/KICKOFF.md. No individual products, brands, models, specifications, prices, stock levels or availability are represented here, because none have been supplied by the client.",
+  "note": "Product CATEGORIES and product TYPES only. Every category and every named product type below appears in docs/KICKOFF.md as confirmed by the business owner. No individual products, brands, models, specifications, prices, stock levels, warranties or availability are represented here, because none have been supplied. Descriptions explain what a product type generally IS — they never assert performance figures, materials or capabilities of specific stocked items.",
+  "availabilityNote": "Stock varies. Contact the business to confirm what is currently available before travelling to a location.",
   "categories": [
     {
       "slug": "vacuum-flasks",
       "name": "Vacuum Flasks",
+      "shortName": "Flasks",
+      "tagline": "Food and water flasks built to hold temperature",
       "summary": "Food flasks and water flasks for keeping meals and drinks at temperature.",
-      "items": ["Food flasks", "Water flasks"],
+      "intro": "Vacuum flasks are one of the core ranges PNK ENTERPRISES trades in. The category covers insulated containers for both solid food and drinks, for daily meals, travel and events.",
       "icon": "flask",
-      "image": null
-    },
-    {
-      "slug": "kitchen-equipment",
-      "name": "Kitchen Equipment",
-      "summary": "Pots, cutlery sets and other equipment for everyday cooking and serving.",
-      "items": ["Pots", "Cutlery sets", "Other kitchen equipment"],
-      "icon": "pot",
-      "image": null
-    },
-    {
-      "slug": "home-appliances",
-      "name": "Home Appliances",
-      "summary": "Powered appliances for preparing and heating food in the home.",
-      "items": [
-        "Toasters",
-        "Blenders",
-        "Microwave ovens",
-        "Air fryers",
-        "Other household appliances"
+      "image": null,
+      "imageAlt": null,
+      "groups": [
+        {
+          "name": "Food flasks",
+          "description": "Insulated containers intended for carrying and serving cooked food."
+        },
+        {
+          "name": "Water flasks",
+          "description": "Insulated flasks for drinking water and other beverages."
+        }
       ],
-      "icon": "blender",
-      "image": null
+      "suitedFor": [
+        "Home kitchens and family meals",
+        "Travel and outdoor use",
+        "Customers ordering from other Nigerian states"
+      ],
+      "metaTitle": "Vacuum Flasks in Lagos — Food Flasks & Water Flasks",
+      "metaDescription": "Food flasks and water flasks supplied by PNK ENTERPRISES from Lagos Island and Ebute Ero Market, Idumota. Call to confirm current availability."
     },
     {
       "slug": "coolers",
       "name": "Coolers",
+      "shortName": "Coolers",
+      "tagline": "Insulated coolers for food and drinks in transit",
       "summary": "Insulated coolers for storing and transporting food and drinks.",
-      "items": ["Coolers"],
+      "intro": "Coolers sit alongside the flask range and serve the same purpose at a larger scale: holding food and drinks at temperature while they are stored or moved. They are commonly bought for households, catering and events.",
       "icon": "cooler",
-      "image": null
+      "image": null,
+      "imageAlt": null,
+      "groups": [
+        {
+          "name": "Food coolers",
+          "description": "Larger insulated containers for holding prepared food."
+        },
+        {
+          "name": "Drink coolers",
+          "description": "Insulated containers for chilled drinks and water."
+        }
+      ],
+      "suitedFor": [
+        "Events and catering",
+        "Households buying in larger sizes",
+        "Transporting food between locations"
+      ],
+      "metaTitle": "Coolers in Lagos — Insulated Food & Drink Coolers",
+      "metaDescription": "Insulated coolers for food and drinks, supplied by PNK ENTERPRISES in Lagos. Contact the business to confirm sizes currently in stock."
+    },
+    {
+      "slug": "kitchen-equipment",
+      "name": "Kitchen Equipment",
+      "shortName": "Kitchen",
+      "tagline": "Pots, cutlery and the equipment a kitchen runs on",
+      "summary": "Pots, cutlery sets and other equipment for everyday cooking and serving.",
+      "intro": "The kitchen equipment range covers the non-powered essentials of a working kitchen — cookware for preparing meals and cutlery for serving them. These are the items households replace and upgrade most often.",
+      "icon": "pot",
+      "image": null,
+      "imageAlt": null,
+      "groups": [
+        {
+          "name": "Pots and cookware",
+          "description": "Cooking pots and related cookware for everyday meal preparation."
+        },
+        {
+          "name": "Cutlery sets",
+          "description": "Sets of eating and serving utensils."
+        },
+        {
+          "name": "Other kitchen equipment",
+          "description": "Additional kitchen items stocked alongside cookware and cutlery."
+        }
+      ],
+      "suitedFor": [
+        "Households setting up a kitchen",
+        "Replacing or upgrading everyday cookware",
+        "Gifting for weddings and new homes"
+      ],
+      "metaTitle": "Kitchen Equipment in Lagos — Pots & Cutlery Sets",
+      "metaDescription": "Pots, cookware and cutlery sets supplied by PNK ENTERPRISES from Lagos Island and Idumota. Call to confirm what is currently available."
+    },
+    {
+      "slug": "home-appliances",
+      "name": "Home Appliances",
+      "shortName": "Appliances",
+      "tagline": "Powered appliances for preparing and heating food",
+      "summary": "Powered appliances for preparing and heating food in the home.",
+      "intro": "The home appliance range covers the powered equipment used to prepare, blend and heat food. It is the fastest-moving part of the household market, and the part where authenticity matters most — which is why the business emphasises stocking genuine products.",
+      "icon": "blender",
+      "image": null,
+      "imageAlt": null,
+      "groups": [
+        {
+          "name": "Blenders",
+          "description": "Appliances for blending and grinding ingredients."
+        },
+        {
+          "name": "Toasters",
+          "description": "Appliances for toasting bread and similar items."
+        },
+        {
+          "name": "Microwave ovens",
+          "description": "Appliances for heating and reheating food."
+        },
+        {
+          "name": "Air fryers",
+          "description": "Appliances for cooking food using circulated hot air."
+        },
+        {
+          "name": "Other household appliances",
+          "description": "Further powered appliances stocked alongside the main lines."
+        }
+      ],
+      "suitedFor": [
+        "Everyday cooking at home",
+        "Replacing an ageing appliance",
+        "Customers ordering from other Nigerian states"
+      ],
+      "metaTitle": "Home Appliances in Lagos — Blenders, Toasters, Microwaves & Air Fryers",
+      "metaDescription": "Blenders, toasters, microwave ovens and air fryers supplied by PNK ENTERPRISES in Lagos. Contact the business to confirm current availability."
     },
     {
       "slug": "household-items",
       "name": "Household Items",
+      "shortName": "Household",
+      "tagline": "General household products alongside the main ranges",
       "summary": "General household products stocked alongside the main ranges.",
-      "items": ["Household items"],
+      "intro": "Beyond the core flask, kitchen and appliance ranges, PNK ENTERPRISES stocks general household items. Because this part of the range changes most often, it is best to ask the business directly about what is currently available.",
       "icon": "home",
-      "image": null
+      "image": null,
+      "imageAlt": null,
+      "groups": [
+        {
+          "name": "Household items",
+          "description": "General items for the home, stocked alongside the main ranges."
+        }
+      ],
+      "suitedFor": [
+        "Restocking everyday household essentials",
+        "Buying several categories in one visit"
+      ],
+      "metaTitle": "Household Items in Lagos — Everyday Home Essentials",
+      "metaDescription": "General household items supplied by PNK ENTERPRISES from Lagos Island and Ebute Ero Market, Idumota. Call to ask what is currently in stock."
     }
   ]
 }

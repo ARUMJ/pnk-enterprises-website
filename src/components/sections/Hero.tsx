@@ -1,7 +1,7 @@
 import CategoryIcon from "@/components/media/CategoryIcon";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Section";
-import categoryData from "@/data/productCategories.json";
+import { categoryGroupNames, productCategories } from "@/lib/products";
 
 /**
  * Homepage hero.
@@ -15,7 +15,7 @@ import categoryData from "@/data/productCategories.json";
  * ratings, counts, years of experience or delivery promises.
  */
 export default function Hero() {
-  const marks = categoryData.categories.slice(0, 4);
+  const marks = productCategories.slice(0, 4);
 
   return (
     <section
@@ -131,7 +131,7 @@ export default function Hero() {
                       {category.name}
                     </p>
                     <p className="text-ink-400 mt-1 text-xs leading-relaxed">
-                      {category.items.slice(0, 2).join(" · ")}
+                      {categoryGroupNames(category).slice(0, 2).join(" · ")}
                     </p>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export default function Hero() {
             </div>
 
             <p className="text-ink-500 mt-8 text-center text-[0.7rem] tracking-[0.14em] uppercase">
-              Product photography to be supplied by the client
+              Product photography to be added
             </p>
           </div>
         </div>

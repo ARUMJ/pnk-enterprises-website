@@ -1,25 +1,47 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import Reveal from "@/components/motion/Reveal";
+import EnquiryPanel from "@/components/products/EnquiryPanel";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { Container, Eyebrow, Section } from "@/components/ui/Section";
 import localBusiness from "@/data/localBusiness.json";
 import { telHref } from "@/lib/contact";
 import { pageMetadata } from "@/lib/siteMeta";
+import { categoryPath, productCategories } from "@/lib/products";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact & Locations in Lagos",
   description:
-    "Contact PNK ENTERPRISES by phone or email, or visit the main address at Isale Agbede Street, Lagos Island, or the branch at Merciful Line, Ebute Ero Market, Idumota, Lagos.",
+    "Contact PNK ENTERPRISES by phone or email to ask about flasks, kitchen equipment or home appliances, or visit the main address at Isale Agbede Street, Lagos Island, or the branch at Merciful Line, Ebute Ero Market, Idumota.",
   path: "/contact",
 });
 
+/**
+ * The conversion destination.
+ *
+ * Hierarchy is deliberate: the enquiry panel comes first because calling or
+ * emailing is the action the business wants, then the full phone list, then
+ * the two addresses, then the unlinked social handles.
+ *
+ * No opening hours are shown because none have been supplied, and no map
+ * embed is used — every practical embed needs an API key the business does
+ * not have, and a broken map is worse than a written address.
+ */
 export default function ContactPage() {
   const { main, branch } = localBusiness.addresses;
 
   return (
     <main id="main" className="flex-1">
-      <Section className="border-ink-200 bg-bone border-b pt-16 sm:pt-20">
+      <Section className="border-ink-200 bg-bone border-b pt-12 sm:pt-16">
         <Container>
+          <Breadcrumbs
+            trail={[
+              { name: "Home", path: "/" },
+              { name: "Contact", path: "/contact" },
+            ]}
+            className="mb-10"
+          />
           <Reveal>
             <Eyebrow>Contact</Eyebrow>
           </Reveal>
@@ -30,9 +52,18 @@ export default function ContactPage() {
           </Reveal>
           <Reveal delay={140}>
             <p className="text-ink-600 mt-6 max-w-2xl text-base leading-relaxed sm:text-lg">
-              Call or email the business directly, or visit either Lagos
-              location in person.
+              Call or email the business to ask about flasks, coolers, kitchen
+              equipment, home appliances or household items — or visit either
+              Lagos location in person.
             </p>
+          </Reveal>
+
+          <Reveal delay={200} className="mt-12">
+            <EnquiryPanel
+              heading="Make an enquiry"
+              description="The quickest way to find out what is currently available is to contact the business directly."
+              headingId="enquiry-heading"
+            />
           </Reveal>
         </Container>
       </Section>
@@ -68,6 +99,10 @@ export default function ContactPage() {
                     </li>
                   ))}
                 </ul>
+                <p className="text-ink-500 mt-3 text-sm">
+                  All three numbers reach the business. Selecting one opens your
+                  phone app to dial it.
+                </p>
               </Reveal>
 
               <Reveal delay={140}>
@@ -127,9 +162,50 @@ export default function ContactPage() {
                   Opening hours have not been supplied yet. Please call ahead
                   before visiting.
                 </p>
+                <p className="text-ink-500 mt-3 text-sm leading-relaxed">
+                  The business also sells and supplies to different states
+                  within Nigeria.
+                </p>
               </Reveal>
             </div>
           </div>
+        </Container>
+      </Section>
+
+      {/* Crawlable route back into the product architecture. */}
+      <Section
+        labelledBy="ranges-link-heading"
+        className="border-ink-200 bg-bone-dark border-t"
+      >
+        <Container>
+          <Reveal>
+            <h2
+              id="ranges-link-heading"
+              className="text-ink-900 text-[clamp(1.8rem,3.5vw,2.4rem)] leading-tight"
+            >
+              Enquiring about a particular range?
+            </h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <p className="text-ink-600 mt-5 max-w-2xl text-base leading-relaxed">
+              Open the range you are interested in and use the enquiry option
+              there — your message will arrive with the range already noted.
+            </p>
+          </Reveal>
+          <Reveal delay={140}>
+            <ul className="mt-8 flex flex-wrap gap-3">
+              {productCategories.map((category) => (
+                <li key={category.slug}>
+                  <Link
+                    href={categoryPath(category.slug)}
+                    className="border-ink-200 text-ink-700 hover:border-ink-400 hover:text-ink-900 bg-bone inline-flex rounded-full border px-4 py-2 text-sm transition-colors"
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </Container>
       </Section>
     </main>

@@ -1,7 +1,7 @@
 import localBusiness from "@/data/localBusiness.json";
-import categoryData from "@/data/productCategories.json";
 
 import { toE164 } from "@/lib/contact";
+import { categoryPath, productCategories } from "@/lib/products";
 import { siteUrl } from "@/lib/siteMeta";
 
 type PostalAddress = {
@@ -26,7 +26,12 @@ export type LocalBusinessJsonLd = {
   areaServed: { "@type": "Country"; name: string };
   makesOffer: {
     "@type": "Offer";
-    itemOffered: { "@type": "Product"; name: string; description: string };
+    itemOffered: {
+      "@type": "ProductGroup";
+      name: string;
+      description: string;
+      url: string;
+    };
   }[];
   location?: {
     "@type": "LocalBusiness";
@@ -73,12 +78,16 @@ export function buildLocalBusinessJsonLd(): LocalBusinessJsonLd {
     telephone: localBusiness.phones.map(toE164),
     address: toPostalAddress(localBusiness.addresses.main),
     areaServed: { "@type": "Country", name: "Nigeria" },
-    makesOffer: categoryData.categories.map((category) => ({
+    makesOffer: productCategories.map((category) => ({
       "@type": "Offer" as const,
       itemOffered: {
-        "@type": "Product" as const,
+        // `ProductGroup`, not `Product`: these are ranges the business trades
+        // in, not individual purchasable items. No price, availability, brand,
+        // SKU or rating is emitted, because none has been supplied.
+        "@type": "ProductGroup" as const,
         name: category.name,
         description: category.summary,
+        url: `${siteUrl}${categoryPath(category.slug)}`,
       },
     })),
     location: {

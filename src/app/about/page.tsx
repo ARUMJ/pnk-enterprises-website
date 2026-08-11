@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 
 import Reveal from "@/components/motion/Reveal";
 import ContactCta from "@/components/sections/ContactCta";
+import OwnerPortrait from "@/components/sections/OwnerPortrait";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { ButtonLink } from "@/components/ui/Button";
 import { Container, Eyebrow, Section } from "@/components/ui/Section";
 import localBusiness from "@/data/localBusiness.json";
 import { pageMetadata } from "@/lib/siteMeta";
@@ -16,8 +19,15 @@ export const metadata: Metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <main id="main" className="flex-1">
-      <Section className="border-ink-200 bg-bone border-b pt-16 sm:pt-20">
+      <Section className="border-ink-200 bg-bone border-b pt-12 sm:pt-16">
         <Container>
+          <Breadcrumbs
+            trail={[
+              { name: "Home", path: "/" },
+              { name: "About", path: "/about" },
+            ]}
+            className="mb-10"
+          />
           <Reveal>
             <Eyebrow>About</Eyebrow>
           </Reveal>
@@ -71,12 +81,12 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <dt className="text-ink-500 text-xs font-semibold tracking-[0.18em] uppercase">
-                      Began trading
+                      What the business sells
                     </dt>
                     <dd className="font-display text-ink-900 mt-2 text-xl">
-                      1998
+                      Household items, kitchen equipment and home appliances
                       <span className="text-ink-500 mt-1 block font-sans text-sm">
-                        1998 (owner-stated; not independently verified)
+                        Five ranges, sold from two Lagos locations
                       </span>
                     </dd>
                   </div>
@@ -126,10 +136,22 @@ export default function AboutPage() {
                   ambition rather than a service currently offered.
                 </p>
               </Reveal>
+
+              <Reveal delay={240}>
+                <ButtonLink
+                  href="/products"
+                  variant="secondary"
+                  className="mt-9"
+                >
+                  See the ranges we supply
+                </ButtonLink>
+              </Reveal>
             </div>
           </div>
         </Container>
       </Section>
+
+      <OwnerPortrait />
 
       <ContactCta />
     </main>

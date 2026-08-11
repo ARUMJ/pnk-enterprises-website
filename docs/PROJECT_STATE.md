@@ -68,20 +68,26 @@ most recent phase.
 
 ## 5. Current Phase
 
-**Phase 2 — Real Design / Experience.** Complete.
+**Phase 3A — Product Architecture, Content Structure & Conversion
+Foundation.** Complete.
 
-This phase replaced the placeholder scaffold with a real, designed,
-multi-page site: design system, motion system, navigation, hero, content
-pages, SEO architecture and expanded structured data.
+This phase deepened the product architecture (category routes, a reusable card
+system, breadcrumbs), made enquiry the explicit conversion path, and reserved
+the owner-photograph slot — all without changing the Phase 2 visual direction
+the owner approved, and without adding a single dependency.
+
+Phase 2 (design system, motion system, navigation, hero, SEO architecture)
+remains the visual foundation and was deliberately preserved.
 
 ---
 
 ## 6. Completed Phases
 
-| Phase | Name                     | Outcome                                                                                                                   |
-| ----- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| 1     | Project scaffold         | Next.js 16 + React 19 + TypeScript + Tailwind 4 baseline, CI workflow, business data layer, JSON-LD, Vercel Preview live. |
-| 2     | Real design / experience | Design system, motion system, header/footer, hero, 4 routes, sitemap/robots, expanded structured data. **This phase.**    |
+| Phase | Name                                                 | Outcome                                                                                                                   |
+| ----- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Project scaffold                                     | Next.js 16 + React 19 + TypeScript + Tailwind 4 baseline, CI workflow, business data layer, JSON-LD, Vercel Preview live. |
+| 2     | Real design / experience                             | Design system, motion system, header/footer, hero, 4 routes, sitemap/robots, expanded structured data.                    |
+| 3A    | Product architecture, content structure & conversion | Category routes, reusable card system, enquiry architecture, breadcrumbs, owner-photo slot. **This phase.**               |
 
 ---
 
@@ -99,20 +105,30 @@ Rendering model:
   state, the mobile disclosure, focus trapping and route-change detection.
 - `RevealObserver` is a Client Component that renders `null`. It exists purely
   to run a single shared `IntersectionObserver`.
+- Phase 3A added **no** Client Components. The five category routes are
+  prerendered via `generateStaticParams` with `dynamicParams = false`, so an
+  unknown slug returns a real 404 instead of rendering on demand — the route
+  stays static and crawlers cannot discover unlimited thin URLs.
 
 ---
 
 ## 8. Pages / Routes
 
-| Route          | File                        | H1                                               | Notes                                                                       |
-| -------------- | --------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------- |
-| `/`            | `src/app/page.tsx`          | "Quality household essentials for modern living" | Hero → CategoryGrid → ValueProposition → Heritage → ContactCta              |
-| `/products`    | `src/app/products/page.tsx` | "Product ranges"                                 | Alternating category detail sections, then ContactCta                       |
-| `/about`       | `src/app/about/page.tsx`    | "About the business"                             | Identity `<dl>`, priorities, reach, then ContactCta                         |
-| `/contact`     | `src/app/contact/page.tsx`  | "Contact and locations"                          | Phones, email, socials, both locations. **No ContactCta** (would duplicate) |
-| `/robots.txt`  | `src/app/robots.ts`         | —                                                | Environment-gated (see §12)                                                 |
-| `/sitemap.xml` | `src/app/sitemap.ts`        | —                                                | Derived from `primaryNav`                                                   |
-| 404            | `src/app/not-found.tsx`     | "We couldn't find that page"                     | `noindex`, no canonical                                                     |
+| Route              | File                               | H1                                                       | Notes                                                                               |
+| ------------------ | ---------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `/`                | `src/app/page.tsx`                 | "Quality household essentials for modern living"         | Hero → CategoryGrid → ValueProposition → Heritage → ContactCta                      |
+| `/products`        | `src/app/products/page.tsx`        | "Household items, kitchen equipment and home appliances" | Discovery index: breadcrumbs, 5 category cards, audiences, how-to-buy, EnquiryPanel |
+| `/products/[slug]` | `src/app/products/[slug]/page.tsx` | The category name, e.g. "Vacuum Flasks"                  | 5 SSG routes. `dynamicParams = false`. Breadcrumbs + BreadcrumbList JSON-LD         |
+| `/about`           | `src/app/about/page.tsx`           | "A Lagos household-goods business"                       | Identity `<dl>`, priorities, reach, **OwnerPortrait slot**, ContactCta              |
+| `/contact`         | `src/app/contact/page.tsx`         | "Speak to PNK ENTERPRISES"                               | EnquiryPanel first, then phones, email, socials, locations, range links             |
+| `/robots.txt`      | `src/app/robots.ts`                | —                                                        | Environment-gated (see §12)                                                         |
+| `/sitemap.xml`     | `src/app/sitemap.ts`               | —                                                        | Derived from `primaryNav` **plus the 5 category routes**                            |
+| 404                | `src/app/not-found.tsx`            | "We couldn't find that page"                             | `noindex`, no canonical                                                             |
+
+The five category slugs are `vacuum-flasks`, `coolers`, `kitchen-equipment`,
+`home-appliances` and `household-items`. They are generated from
+`src/data/productCategories.json`, so adding a category creates its route, its
+sitemap entry, its card and its structured-data offer at once.
 
 Every primary page has **exactly one `<h1>`** (verified against rendered HTML).
 No empty or placeholder routes were created.
@@ -144,6 +160,36 @@ No empty or placeholder routes were created.
   prose, always qualified. Today / Focus / Ambition trio.
 - **`ContactCta.tsx`** — dark closing CTA reused by home, products and about.
 
+### Products & conversion (`src/components/products/`) — added Phase 3A
+
+- **`ProductCategoryCard.tsx`** — the single reusable card system, shared by
+  the homepage grid, the `/products` index and the related-ranges strip. Three
+  variants stop the surfaces looking like one block repeated:
+  - `feature` — wide two-column card, used once on `/products` as an anchor
+  - `standard` — default portrait-media card
+  - `compact` — no media, for dense cross-linking
+    The **whole card is one link** to the category route, using a stretched
+    `::after` overlay. A nested "Enquire" button was deliberately **not** placed
+    inside it — nesting interactive elements inside a link is an accessibility
+    failure. The enquiry action lives one click away on the category page, where
+    the range is in context. Media goes through `MediaFrame`, so Phase 3B
+    photography drops in with no changes here.
+- **`EnquiryPanel.tsx`** — the conversion unit. Renders only the _confirmed_
+  channels and states the **outcome of each click before the user commits**
+  ("Opens your phone app and dials the business directly"). Accepts an optional
+  `categoryName` so the email arrives pre-filled with the range in the subject.
+- **`AvailabilityNote.tsx`** — the stock-honesty notice. No inventory data
+  exists, so every product surface says availability varies and asks the
+  customer to confirm before travelling. Accurate _and_ a conversion prompt.
+
+### Sections added in Phase 3A
+
+- **`sections/OwnerPortrait.tsx`** — the reserved slot for the owner's
+  photograph on `/about`. Renders `MediaFrame` in its reserved 4:5 portrait
+  state with a generic silhouette. **No stock portrait and no generated
+  likeness is used** — a fake face on an "about the owner" section would
+  misrepresent the business. Copy is limited to what the owner stated.
+
 ### UI primitives (`src/components/ui/`)
 
 - **`Button.tsx`** — `ButtonLink` (renders `next/link`) and `Button` (renders
@@ -151,6 +197,11 @@ No empty or placeholder routes were created.
   The split exists so navigation is never a `<button>` and actions are never an
   `<a>`.
 - **`Section.tsx`** — `Container`, `Eyebrow`, `Section` (`id`, `labelledBy`).
+
+- **`Breadcrumbs.tsx`** (Phase 3A) — emits the visible, keyboard-navigable
+  trail _and_ the matching `BreadcrumbList` JSON-LD from one source of truth,
+  so the two can never disagree. Current page is plain text with
+  `aria-current="page"`, never a link to itself.
 
 ### Media (`src/components/media/`)
 
@@ -171,6 +222,50 @@ No empty or placeholder routes were created.
 ### Structured data
 
 - **`LocalBusinessJsonLd.tsx`** — _Server_. Emits a single `@graph` script.
+
+---
+
+## 9b. Product Data Layer (Phase 3A)
+
+**`src/data/productCategories.json`** is the single source of truth for the
+catalogue. Phase 2's flat `items[]` string array was removed — it could not
+carry a route, metadata or media. The shape is now:
+
+```
+{ note, availabilityNote, categories: [ {
+    slug, name, shortName, tagline, summary, intro,
+    icon,                       // CategoryIcon name
+    image: null, imageAlt: null,   // ← Phase 3B fills these in
+    groups: [{ name, description }],  // sub-ranges within the category
+    suitedFor: [...],
+    metaTitle, metaDescription  // per-route SEO, authored not generated
+} ] }
+```
+
+`image`/`imageAlt` are already modelled and already `null`. Phase 3B is a
+**data edit, not a code change**: set the two fields and `MediaFrame` swaps its
+reserved state for the real photograph at the same reserved aspect ratio, so no
+layout shift is introduced.
+
+**`src/lib/products.ts`** is the typed accessor: `productCategories`,
+`availabilityNote`, `catalogueNote`, `productCategorySlugs`,
+`getProductCategory()`, `categoryGroupNames()`, `relatedCategories()` and
+`categoryPath()`. Nothing outside this module imports the JSON, so the storage
+format can change without touching components.
+
+**`src/lib/enquiry.ts`** models the conversion channels. Each channel is
+`{ enabled }`-gated and disabled channels are never rendered. WhatsApp is
+present as `enabled: false` with a comment: the number is _not_ confirmed as a
+WhatsApp line, so no `wa.me` link is invented. When the owner confirms, that
+phase flips one boolean. It also builds the pre-filled `mailto:` subject/body,
+optionally scoped to a category.
+
+Chosen category model (five, not the ten suggested): the suggested list mixed
+categories with individual appliances. Ten near-empty top-level entries would
+have produced ten thin pages competing with each other. Toasters, blenders,
+microwaves and air fryers are therefore `groups` **inside** Home Appliances —
+each still named in body copy, headings and metadata for search, but on one
+page with enough substance to rank.
 
 ---
 
@@ -256,8 +351,20 @@ verification. Always use `rounded-(--radius-lg)`, `duration-(--duration-base)`,
   prototype from competing with or pre-empting the real site in search results.
   **Indexing turns on only when `NEXT_PUBLIC_SITE_URL` is set on a production
   deployment.**
-- **`sitemap.ts` is derived from `primaryNav`**, so a route cannot be shipped
-  and silently left out of the sitemap.
+- **`sitemap.ts` is derived from `primaryNav` merged with the category
+  routes**, so a route cannot be shipped and silently left out of the sitemap.
+  It currently emits 9 URLs (4 primary + 5 categories), verified in the build
+  output.
+- **Per-category metadata is authored, not templated** (Phase 3A).
+  `metaTitle`/`metaDescription` live on each category record, so the five
+  routes cannot collide on a duplicated pattern. Examples: "Vacuum Flasks in
+  Lagos — Food Flasks & Water Flasks", "Home Appliances in Lagos — Blenders,
+  Toasters, Microwaves & Air Fryers".
+- **Internal linking (Phase 3A).** Every category is reachable from the
+  homepage grid, the `/products` index, a footer "Ranges" column, the contact
+  page range chips and a related-ranges strip on each sibling category page —
+  all plain crawlable `<a>` elements from `next/link`, no JavaScript required.
+  Link text is descriptive; there is no "click here" or "read more".
 - **Titles** — home: "Household Items, Kitchen Equipment & Home Appliances in
   Lagos"; products: "Products — Vacuum Flasks, Kitchen Equipment & Home
   Appliances"; about: "About the Business"; contact: "Contact & Locations in
@@ -342,15 +449,22 @@ above.
 5. **No opening hours anywhere**, because none were supplied. The contact page
    says so explicitly and advises calling ahead.
 6. **No geo coordinates** in structured data, so no map embed.
-7. **Product listings are category-level placeholders**, never presented as real,
-   priced or in-stock products.
-8. **Browser-based visual verification was not possible from the build sandbox.**
-   The Playwright browser CDN is unreachable, and all `*.vercel.app` hosts fail
-   the TLS handshake from that network, so the Preview could not be fetched
-   there either. Verification was therefore done against locally rendered HTML
-   and compiled CSS, plus Vercel's own deployment status. **A human visual pass
-   on the Preview URL in a real browser is still recommended** before the site
-   is shown to the client.
+7. **Product listings are category-level only**, never presented as real,
+   priced or in-stock products. There are no SKUs, no specifications and no
+   `Product` schema, because none of that data exists yet.
+8. **WhatsApp is architected but disabled.** `src/lib/enquiry.ts` carries the
+   channel with `enabled: false`; no `wa.me` link is rendered, because none of
+   the three numbers is confirmed as a WhatsApp line.
+9. **No contact form.** A form implies a backend that does not exist; a form
+   that silently discards enquiries would be worse than none. Enquiry is
+   therefore `tel:` and pre-filled `mailto:` only.
+10. **Browser-based visual verification was not possible from the build sandbox.**
+    The Playwright browser CDN is unreachable, and all `*.vercel.app` hosts fail
+    the TLS handshake from that network, so the Preview could not be fetched
+    there either. Verification was therefore done against locally rendered HTML
+    and compiled CSS, plus Vercel's own deployment status. **A human visual pass
+    on the Preview URL in a real browser is still recommended** before the site
+    is shown to the client.
 
 ---
 
@@ -369,23 +483,38 @@ above.
    two locations.
 10. **Preferred enquiry route** — phone, email or a contact form. No form is
     implemented yet because there is no backend or email service.
+11. **An owner photograph** for the reserved `OwnerPortrait` slot on `/about`.
+12. **Whether the owner wants each range broken out further** (e.g. toasters
+    and blenders as separate pages). That is only worth doing once there is
+    real photography and enough distinct copy to justify separate URLs.
 
 ---
 
 ## 18. Next Planned Phase
 
-**Phase 3 — Content, imagery and conversion.** Suggested scope, in priority
-order:
+**Phase 3B — Real assets, branding and image integration.** The owner has the
+logo, product photographs and an owner photograph; they were deliberately **not**
+supplied to Phase 3A, and no substitutes were invented. Scope:
 
-1. Integrate real product photography through `MediaFrame` (a data-layer change
-   only: set `image.src` and `image.alt`; no layout work required).
-2. Apply real branding once supplied.
-3. Add an enquiry path — either a WhatsApp deep link (no backend) or a contact
-   form with a server action and an email provider (a dependency decision that
-   needs client sign-off).
-4. Add per-page `BreadcrumbList` JSON-LD using the existing helper.
-5. Add an Open Graph image once branding exists.
-6. Run Lighthouse against the Preview deployment and act on the results.
+1. **Product photography** — set `image`/`imageAlt` on each record in
+   `productCategories.json`. This is a data edit; `MediaFrame` already reserves
+   the correct ratio, so no layout work and no CLS.
+2. **Owner photograph** — drop into the reserved `OwnerPortrait` slot on
+   `/about`.
+3. **Logo and branding** — replace the type-set wordmark in `SiteHeader` and
+   `SiteFooter`; revisit palette only if the real brand demands it.
+4. **Image optimisation** — correct `sizes`, `priority` on the hero image only,
+   modern formats, meaningful filenames, accurate non-stuffed `alt` text.
+5. **A real Open Graph image**, replacing `/images/placeholder.svg`.
+6. Then, as a **separate dedicated phase**: advanced motion — hero
+   choreography, product interactions, image reveals, section transitions,
+   parallax and logo motion. Phase 3A intentionally added **no** new motion
+   complexity and every new section reuses the existing `Reveal` +
+   `RevealObserver` system, so that phase starts from a clean base.
+
+Not planned, and should not be added without an explicit client decision: a
+cart, checkout, payments, prices, stock levels, a CMS, or a contact form
+backend.
 
 ---
 
@@ -453,7 +582,7 @@ prices, stock availability, or export capability.
 ---
 
 **LAST UPDATED:** 2026-08-11
-**CURRENT PHASE:** Phase 2 — Real Design / Experience (complete)
-**CURRENT DEV COMMIT:** `b7855595842689b5f505c6c60fd4ab8c7d82ce83` — "feat: real design system, motion, navigation and content pages"
-**VERCEL PREVIEW STATUS:** Ready / success — https://pnk-enterprises-website-meigv0ayl-gospelboys.vercel.app
-**NEXT ACTION:** Obtain real product photography and brand assets from the client (§17), then begin Phase 3 (§18)
+**CURRENT PHASE:** Phase 3A — Product Architecture, Content Structure & Conversion Foundation (complete)
+**CURRENT DEV COMMIT:** see `git log origin/dev -1` — Phase 3A commit "feat: product architecture, category routes, enquiry conversion path and breadcrumbs"
+**VERCEL PREVIEW STATUS:** see the Phase 3A delivery report / Vercel dashboard
+**NEXT ACTION:** Collect the real assets listed in §17 from the client, then begin Phase 3B (§18)

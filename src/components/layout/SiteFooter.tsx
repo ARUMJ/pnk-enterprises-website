@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Section";
 import localBusiness from "@/data/localBusiness.json";
 import { primaryNav } from "@/lib/nav";
+import { categoryPath, productCategories } from "@/lib/products";
 import { telHref } from "@/lib/contact";
 
 /**
@@ -19,7 +20,7 @@ export default function SiteFooter() {
   return (
     <footer className="border-ink-200 bg-ink-950 text-ink-200 mt-auto border-t">
       <Container className="py-16">
-        <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1.4fr]">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.1fr_0.8fr_1fr_1.3fr]">
           <div>
             <p className="font-display text-bone text-2xl">
               PNK<span className="text-brass-400">.</span> Enterprises
@@ -45,6 +46,24 @@ export default function SiteFooter() {
                     className="text-ink-200 hover:text-brass-300 text-sm underline-offset-4 transition-colors hover:underline"
                   >
                     {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Product ranges">
+            <h2 className="text-ink-400 font-sans text-xs font-semibold tracking-[0.18em] uppercase">
+              Ranges
+            </h2>
+            <ul className="mt-5 space-y-3">
+              {productCategories.map((category) => (
+                <li key={category.slug}>
+                  <Link
+                    href={categoryPath(category.slug)}
+                    className="text-ink-200 hover:text-brass-300 text-sm underline-offset-4 transition-colors hover:underline"
+                  >
+                    {category.name}
                   </Link>
                 </li>
               ))}
