@@ -765,8 +765,8 @@ prices, stock availability, or export capability.
 
 **LAST UPDATED:** 2026-08-11
 **CURRENT PHASE:** Phase 3C — Visual Enhancement & Professional Art Direction (complete)
-**CURRENT DEV COMMIT:** `__COMMIT__`
+**CURRENT DEV COMMIT:** `c3f9a4ec8bdf61f63c5257bb7e16df40cd1fa01b` — "feat: professional art direction for founder portrait, product photos and category imagery"
 **CURRENT DEV STATE:** `dev` is ahead of `main`; `main` remains untouched at `522ded38ab099b6e80f29f9938d6cfaeeb97f116`. Working tree clean.
-**CI STATUS:** `__CI__`
-**VERCEL PREVIEW URL:** `__PREVIEW__`
+**CI STATUS:** GitHub Actions run `31523486815` — **success** (job: Build, lint and typecheck)
+**VERCEL PREVIEW URL:** https://pnk-enterprises-website-mj05xtr4h-gospelboys.vercel.app (Vercel deployment `5856397866`, state `success`)
 **NEXT ACTION:** Client review of the Phase 3C Preview (founder portrait, category artwork, product imagery, mobile layout). Then the dedicated motion and interaction phase (§18.6).
