@@ -1,11 +1,258 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   PNK ENTERPRISES — DESIGN SYSTEM TOKENS
+   --------------------------------------------------------------------------
+   Palette rationale: a warm "ink + bone + brass" system. Ink gives editorial
+   weight, bone keeps large surfaces soft rather than clinical white, and brass
+   references quality metal cookware and flask hardware without looking like a
+   luxury-goods site. No brand colours have been supplied by the client yet —
+   these are a defensible starting point, documented in docs/PROJECT_STATE.md.
+   ========================================================================== */
+
 @theme {
+  /* ---- Typography ------------------------------------------------------
+     System-only stacks: zero webfont requests, zero layout shift, no
+     licensing risk. A licensed brand typeface can be introduced later via
+     next/font/local without changing any component. */
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-display:
+    ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Palatino,
+    Georgia, Cambria, "Times New Roman", serif;
+
+  /* ---- Ink (warm neutral) ---- */
+  --color-ink-50: #faf9f7;
+  --color-ink-100: #f2efea;
+  --color-ink-200: #e2ddd5;
+  --color-ink-300: #c8c1b6;
+  --color-ink-400: #9c9387;
+  --color-ink-500: #787065;
+  --color-ink-600: #5c554c;
+  --color-ink-700: #443e37;
+  --color-ink-800: #2b2723;
+  --color-ink-900: #1a1714;
+  --color-ink-950: #0e0c0a;
+
+  /* ---- Bone (page surface) ---- */
+  --color-bone: #faf7f2;
+  --color-bone-dark: #f1ebe1;
+
+  /* ---- Brass (accent) ---- */
+  --color-brass-50: #fbf6ec;
+  --color-brass-100: #f5e9d2;
+  --color-brass-200: #e9d2a4;
+  --color-brass-300: #dbb872;
+  --color-brass-400: #cc9f4a;
+  --color-brass-500: #b8873b;
+  --color-brass-600: #9a6d2f;
+  --color-brass-700: #7a5626;
+  --color-brass-800: #59401d;
+  --color-brass-900: #3c2b13;
+
+  /* ---- Radius language ---- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 2.25rem;
+
+  /* ---- Motion language --------------------------------------------------
+     One shared vocabulary of easings and durations so every animation in the
+     product feels like it came from the same hand. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 620ms;
+  --duration-reveal: 900ms;
 }
 
-body {
-  font-family: var(--font-sans);
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the sticky header never covers a heading. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bone);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, high-contrast focus for every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--color-brass-600);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  ::selection {
+    background-color: var(--color-brass-200);
+    color: var(--color-ink-950);
+  }
+}
+
+/* ==========================================================================
+   MOTION SYSTEM
+   --------------------------------------------------------------------------
+   Scroll reveals are expressed purely in CSS and driven by a single
+   IntersectionObserver island (src/components/motion/RevealObserver.tsx),
+   which adds `data-revealed` to elements carrying `data-reveal`.
+
+   The hidden initial state is wrapped in `@media (scripting: enabled)` so that
+   if JavaScript is unavailable — or the browser predates that media query —
+   the rule never applies and all content is visible by default. Content is
+   never gated behind a script.
+   ========================================================================== */
+
+@media (scripting: enabled) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-shift, 1.25rem), 0);
+  }
+
+  [data-reveal="mask"] {
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+[data-reveal] {
+  transition:
+    opacity var(--duration-reveal) var(--ease-out-expo),
+    transform var(--duration-reveal) var(--ease-out-expo),
+    clip-path var(--duration-reveal) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+  will-change: auto;
+}
+
+/* Hero entrance sequence — runs on load rather than on scroll. */
+@media (scripting: enabled) {
+  [data-enter] {
+    animation: pnk-enter var(--duration-reveal) var(--ease-out-expo) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+}
+
+@keyframes pnk-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--enter-shift, 1.5rem), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Very slow ambient drift on the hero composition. Decorative only. */
+@keyframes pnk-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -0.6rem, 0);
+  }
+}
+
+.pnk-float {
+  animation: pnk-float 9s var(--ease-in-out-soft) infinite;
+  animation-delay: var(--float-delay, 0ms);
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   Users who ask for reduced motion get the full content immediately, with no
+   transforms, no ambient animation and no scroll-linked movement. Only
+   opacity-free instant state changes remain.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal],
+  [data-enter] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    animation: none !important;
+  }
+
+  .pnk-float {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+@utility pnk-rule {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--color-ink-200) 15%,
+    var(--color-ink-200) 85%,
+    transparent
+  );
+}
+
+/* Fine paper-like texture for large dark surfaces, drawn with gradients so it
+   costs no extra network request. */
+@utility pnk-grain {
+  background-image:
+    radial-gradient(
+      circle at 20% 15%,
+      color-mix(in oklab, var(--color-brass-500) 16%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      color-mix(in oklab, var(--color-brass-700) 14%, transparent),
+      transparent 50%
+    );
 }

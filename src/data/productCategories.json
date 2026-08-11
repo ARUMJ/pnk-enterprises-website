@@ -1,0 +1,51 @@
+{
+  "note": "Product CATEGORIES only. These are the categories confirmed in docs/KICKOFF.md. No individual products, brands, models, specifications, prices, stock levels or availability are represented here, because none have been supplied by the client.",
+  "categories": [
+    {
+      "slug": "vacuum-flasks",
+      "name": "Vacuum Flasks",
+      "summary": "Food flasks and water flasks for keeping meals and drinks at temperature.",
+      "items": ["Food flasks", "Water flasks"],
+      "icon": "flask",
+      "image": null
+    },
+    {
+      "slug": "kitchen-equipment",
+      "name": "Kitchen Equipment",
+      "summary": "Pots, cutlery sets and other equipment for everyday cooking and serving.",
+      "items": ["Pots", "Cutlery sets", "Other kitchen equipment"],
+      "icon": "pot",
+      "image": null
+    },
+    {
+      "slug": "home-appliances",
+      "name": "Home Appliances",
+      "summary": "Powered appliances for preparing and heating food in the home.",
+      "items": [
+        "Toasters",
+        "Blenders",
+        "Microwave ovens",
+        "Air fryers",
+        "Other household appliances"
+      ],
+      "icon": "blender",
+      "image": null
+    },
+    {
+      "slug": "coolers",
+      "name": "Coolers",
+      "summary": "Insulated coolers for storing and transporting food and drinks.",
+      "items": ["Coolers"],
+      "icon": "cooler",
+      "image": null
+    },
+    {
+      "slug": "household-items",
+      "name": "Household Items",
+      "summary": "General household products stocked alongside the main ranges.",
+      "items": ["Household items"],
+      "icon": "home",
+      "image": null
+    }
+  ]
+}

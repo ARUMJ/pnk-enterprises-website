@@ -1,23 +1,27 @@
-import HeroPlaceholder from "@/components/HeroPlaceholder";
+import type { Metadata } from "next";
 
-export default function Home() {
+import CategoryGrid from "@/components/sections/CategoryGrid";
+import ContactCta from "@/components/sections/ContactCta";
+import Heritage from "@/components/sections/Heritage";
+import Hero from "@/components/sections/Hero";
+import ValueProposition from "@/components/sections/ValueProposition";
+import { pageMetadata } from "@/lib/siteMeta";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Household Items, Kitchen Equipment & Home Appliances in Lagos",
+  description:
+    "PNK ENTERPRISES supplies vacuum flasks, kitchen equipment, home appliances, coolers and household items from Lagos Island and Ebute Ero Market, Idumota, to customers across Nigeria.",
+  path: "/",
+});
+
+export default function HomePage() {
   return (
-    <main id="main" className="mx-auto w-full max-w-2xl flex-1 p-8">
-      <h1 className="text-2xl font-semibold">
-        PNK ENTERPRISES — Prototype Scaffold
-      </h1>
-      <p className="mt-4 text-sm">
-        This page is the technical foundation for the project, not the final
-        website. It exists to verify the build, linting, type checking and
-        deployment-independent tooling. Design, content and product information
-        are added in later phases.
-      </p>
-      <div className="mt-8">
-        <HeroPlaceholder
-          title="Hero region reserved"
-          description="The final hero experience is designed in a later phase."
-        />
-      </div>
+    <main id="main" className="flex-1">
+      <Hero />
+      <CategoryGrid />
+      <ValueProposition />
+      <Heritage />
+      <ContactCta />
     </main>
   );
 }
