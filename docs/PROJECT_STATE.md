@@ -1,5 +1,55 @@
 # PNK ENTERPRISES — PROJECT STATE
 
+## HOW TO CONTINUE THIS PROJECT
+
+_Read this section first. It is written for a brand-new AI session or developer
+with no prior context._
+
+**What this project is.** A client-facing marketing website for **PNK
+ENTERPRISES** (legal name _Peter N Kabai Enterprises_; branch _CLAREAN PEEKAN
+LTD_), a Lagos Island household-goods, kitchen-equipment and home-appliance
+retailer/distributor. It is a **prototype built for the owner's approval**, not
+a live shop. There is no cart, no checkout, no prices and no stock data — and
+none of those may be added without an explicit client decision. Stack: Next.js
+16 (App Router) + React 19 + TypeScript + Tailwind 4, pnpm only, deployed to
+Vercel from the `dev` branch.
+
+**What is completed.** Phase 1 (scaffold), Phase 2 (design system, motion
+system, navigation, hero, SEO architecture), Phase 3A (product architecture,
+category routes, card system, enquiry path), Phase 3B (client branding, logo
+preparation, real product photography, owner portrait) and **Phase 3C (visual
+enhancement and art direction — the most recent phase)**. Details in §6 and
+§18.
+
+**What must not be changed.**
+
+- Do not rebuild from scratch and do not redesign the approved visual direction
+  (ink + bone + brass palette, typography, spacing, responsive behaviour).
+- Do not remove or expand the motion system. A dedicated motion phase is next;
+  until then, reuse `Reveal` + `RevealObserver` only.
+- Do not invent business facts. No prices, stock levels, specifications,
+  ratings, reviews, customer counts, certifications, awards, delivery promises,
+  opening hours or social URLs. `1998` is **owner-stated, not verified**, and
+  must always be qualified. PNK does **not** currently export — it is an
+  ambition only.
+- Do not replace the client's authentic assets (logo, six product photographs,
+  owner portrait) with generic or AI-generated substitutes.
+- **Do not regenerate, replace or retouch the owner's face.** See §18.3.
+- `.github/workflows/ci.yml` must stay byte-identical; pushing changes to it is
+  rejected by the GitHub App's permissions.
+- Git: work only on `dev`. Never push to `main`, never force-push, never
+  rewrite pushed history.
+
+**Where it currently is.** All work is on `dev`, CI is green and a Vercel
+Preview is generated on every push. The exact commit, CI run and Preview URL
+are in the footer block at the very end of this file.
+
+**Next planned phase.** The dedicated **motion and interaction refinement**
+phase (§18). The other outstanding items are a real Open Graph image and
+genuine client photography for the coolers and household-items ranges.
+
+---
+
 > **Purpose of this document.** This is the persistent context file for the
 > project. Any future AI session (or human developer) should read this file
 > **before** reading code and **before** making changes. It records what exists,
@@ -68,26 +118,28 @@ most recent phase.
 
 ## 5. Current Phase
 
-**Phase 3A — Product Architecture, Content Structure & Conversion
-Foundation.** Complete.
+**Phase 3C — Visual Enhancement & Professional Art Direction.** Complete.
 
-This phase deepened the product architecture (category routes, a reusable card
-system, breadcrumbs), made enquiry the explicit conversion path, and reserved
-the owner-photograph slot — all without changing the Phase 2 visual direction
-the owner approved, and without adding a single dependency.
+This phase raised the presentation quality of every image on the site without
+changing the approved design, the motion system or any business fact. It did
+three things: created illustrative category artwork for the two ranges with no
+client photography, turned the owner's snapshot into a studio-style business
+portrait **without altering his face**, and re-mastered the six authentic
+product photographs to a consistent commercial standard.
 
-Phase 2 (design system, motion system, navigation, hero, SEO architecture)
-remains the visual foundation and was deliberately preserved.
+No dependencies were added. No component was redesigned. Full detail in §18.
 
 ---
 
 ## 6. Completed Phases
 
-| Phase | Name                                                 | Outcome                                                                                                                   |
-| ----- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| 1     | Project scaffold                                     | Next.js 16 + React 19 + TypeScript + Tailwind 4 baseline, CI workflow, business data layer, JSON-LD, Vercel Preview live. |
-| 2     | Real design / experience                             | Design system, motion system, header/footer, hero, 4 routes, sitemap/robots, expanded structured data.                    |
-| 3A    | Product architecture, content structure & conversion | Category routes, reusable card system, enquiry architecture, breadcrumbs, owner-photo slot. **This phase.**               |
+| Phase | Name                                                 | Outcome                                                                                                                                   |
+| ----- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Project scaffold                                     | Next.js 16 + React 19 + TypeScript + Tailwind 4 baseline, CI workflow, business data layer, JSON-LD, Vercel Preview live.                 |
+| 2     | Real design / experience                             | Design system, motion system, header/footer, hero, 4 routes, sitemap/robots, expanded structured data.                                    |
+| 3A    | Product architecture, content structure & conversion | Category routes, reusable card system, enquiry architecture, breadcrumbs, owner-photo slot.                                               |
+| 3B    | Branding, real imagery & product photography         | Client logo prepared into brand marks + app icons, six product photos mastered, owner portrait integrated.                                |
+| 3C    | Visual enhancement & professional art direction      | Illustrative category artwork (coolers, household items), studio-grade founder portrait, re-mastered product photography. **This phase.** |
 
 ---
 
@@ -490,47 +542,165 @@ above.
 
 ---
 
-## 18. Next Planned Phase
+## 18. Phase 3C — What Changed, And The Image Inventory
 
-**Phase 3B is complete.** The client supplied eight photographs (logo, six
-product box photos, one owner portrait), now held read-only in
-`public/images/source/` and prepared into `public/images/{brand,owner,products}/`.
+Phase 3C was a **presentation** phase. It changed pixels, alt text and one data
+flag. It did not change the design system, the motion system, the routing, the
+component architecture or any business fact.
 
-Delivered in 3B:
+### 18.1 Authentic vs illustrative imagery — the critical distinction
 
-1. **Logo** — deskewed, stray ink removed, alpha cut, and issued as navy / bone
-   / ink variants plus a 512px app icon. Presentation only; the identity itself
-   was not redesigned.
-2. **Product photography** — six photographs reframed to a common 1:1, tonally
-   matched and colour-checked against the originals, then mapped to the three
-   categories they genuinely represent.
-3. **Owner portrait** — reframed to 4:5, tonally balanced, with a shallower
-   depth of field. Face, features, age and clothing unaltered.
-4. **Integration** — hero composition, category cards, category hero images, a
-   `gallery` field for ranges with several real photographs, header/footer
-   marks, favicon/apple icon and `LocalBusiness.logo`/`image`.
+This is the single most important thing to understand before touching imagery.
 
-Still outstanding, and deliberately not faked:
+**AUTHENTIC — real photographs supplied by the client.** These are genuine
+business assets and must never be replaced with generic or AI-generated
+substitutes:
 
-- **No cooler photograph and no household-item photograph exist**, so those two
-  categories keep their honest reserved-slot treatment. They need real
-  photography from the business.
-- **A real Open Graph image** still replaces nothing — `/images/placeholder.svg`
-  is still the OG asset.
-- **Supplementary licensed stock imagery** (lifestyle/atmosphere) could not be
-  fetched in the build environment; see the Phase 3B report.
-- Then, as a **separate dedicated phase**: advanced motion — hero
-  choreography, product interactions, image reveals, section transitions,
-  parallax and logo motion. Phase 3B added **no** new motion complexity; every
-  new image reuses the existing `Reveal` + `RevealObserver` system.
+| Asset                                           | Origin                      |
+| ----------------------------------------------- | --------------------------- |
+| `public/images/brand/pnk-mark-*.{png,webp}`     | Client's own logo           |
+| `public/images/owner/owner-portrait.{webp,jpg}` | Photograph of the owner     |
+| the six files in `public/images/products/`      | Client's own product photos |
+| the eight originals in `public/images/source/`  | Untouched client uploads    |
 
-Not planned, and should not be added without an explicit client decision: a
-cart, checkout, payments, prices, stock levels, a CMS, or a contact form
-backend.
+**ILLUSTRATIVE — AI-generated category artwork, created in Phase 3C.** These
+are _not_ photographs of PNK stock:
+
+| Asset                                                          | Represents      |
+| -------------------------------------------------------------- | --------------- |
+| `public/images/categories/coolers-category.{webp,jpg}`         | Coolers         |
+| `public/images/categories/household-items-category.{webp,jpg}` | Household items |
+
+They exist because the client supplied **no cooler photograph and no
+household-item photograph**, which left those two category pages visually
+empty. Reusing a flask or a blender there would have misrepresented the range,
+so generic, unbranded category artwork was generated instead.
+
+Rules that govern them, enforced in code:
+
+- They carry **no PNK logo**, no fake packaging, no brand names, no model
+  numbers, no specifications and no prices.
+- `productCategories.json` marks each with **`imageIsIllustrative: true`**
+  (type declared in `src/lib/products.ts`).
+- Wherever that flag is true, the category page renders a visible caption:
+  _"Illustrative category image, not a photograph of stock held. Ask us what is
+  currently available."_
+- Their `alt` text begins _"Illustrative category image:"_ and never claims the
+  pictured item is PNK inventory.
+
+**If the client later supplies real cooler or household photographs, replace
+these two files and set `imageIsIllustrative` back to `false`.**
+
+### 18.2 `public/images/source/` is read-only
+
+The eight original client uploads are tracked in Git and must never be edited
+or deleted. Every prepared asset is derived from them, so any future re-master
+starts from the originals rather than from an already-processed file.
+
+### 18.3 How the founder photograph was edited
+
+**Founder identity preserved; face was not replaced or regenerated.**
+
+The portrait was produced from the original upload
+(`public/images/source/photo_6041819337141719603_y.jpg`) using **deterministic
+image operations only** (ImageMagick). No generative model was used on the
+person. Specifically:
+
+- **No AI face generation, no face swap, no beauty filter, no skin smoothing,
+  no reshaping, no slimming, no age alteration.** Natural skin texture, pores
+  and lines are intact.
+- **Zero geometric warp.** The subject layer is a straight pixel-op chain
+  applied to the original crop. This was verified numerically: a
+  `compare -subimage-search` of a facial patch returned an offset of exactly
+  the expected value, proving the facial geometry is unmoved.
+- What _was_ changed: exposure and tonal range (skin lifted ~12 levels with hue
+  preserved and no clipping), contrast, micro-sharpening, and **the background**.
+
+The background was replaced with a soft, warm neutral studio falloff — a
+brighter pool behind the head fading to deeper corners — plus a subtle contact
+shadow for edge separation. The subject was isolated with a colour-derived
+matte built from measured channel separation (the pale blue garment is strongly
+blue-dominant; skin sits at a distinct red-minus-green value; foliage satisfies
+`g>r && g>b`). This removed the original wall, signage and potted plant.
+
+His clothing, posture and cultural appearance are unchanged.
+
+### 18.4 Treatment applied to the six authentic product photographs
+
+All six were re-mastered **from the read-only originals**, not from the Phase 3B
+outputs. Each was reframed to show the complete product and its branding
+(several previously clipped the brand name at the top edge), then given one
+consistent, conservative grade:
+
+`-level 1%,98% -sigmoidal-contrast 1.6,48% -unsharp 0x1.0+0.45+0.02`
+
+Exported at 1000x1000 as WebP q84 + JPEG q86.
+
+**Deliberately NOT used: `-auto-level` and `-modulate` saturation.** In an
+earlier experiment those shifted the Pyramid blender's red from 181 to 206,
+which misrepresents the product. Colour fidelity is checked by sampling
+identical pixel coordinates before and after; the current recipe moves key
+product colours by only a few levels (blender red 179 to 184) and clips
+essentially no highlights or shadows.
+
+One exception to the square crop: the **Pyramid blender** box is far taller
+than it is wide, so a square crop cut off the product. It is instead fitted
+whole onto a neutral `#efece7` studio canvas.
+
+### 18.5 Where each image is used
+
+| Image                                   | Used on                                                          |
+| --------------------------------------- | ---------------------------------------------------------------- |
+| `brand/pnk-mark-navy.webp`              | Site header                                                      |
+| `brand/pnk-mark-bone.webp`              | Site footer                                                      |
+| `brand/pnk-icon-512.png`                | `LocalBusiness.logo` / `.image`; `src/app/{icon,apple-icon}.png` |
+| `owner/owner-portrait.webp`             | `OwnerPortrait` section on the About page                        |
+| `products/gluck-vacuum-food-jar`        | Vacuum flasks card + category hero; homepage hero                |
+| `products/crown-star-...-set`           | Kitchen equipment card + category hero; homepage hero            |
+| `products/sokany-air-fryer`             | Home appliances card + category hero; homepage hero              |
+| `products/gluck-vacuum-tumbler`         | Homepage hero; vacuum-flasks gallery                             |
+| `products/gluck-vacuum-beverage-bottle` | Vacuum-flasks gallery                                            |
+| `products/pyramid-blender`              | Home-appliances gallery                                          |
+| `categories/coolers-category`           | Coolers card + coolers category hero (labelled illustrative)     |
+| `categories/household-items-category`   | Household items card + category hero (labelled illustrative)     |
+
+Image placement was deliberately **not** expanded: no image was added merely
+because a slot was empty, and the homepage was not turned into a gallery. The
+`reservedLabel` mechanism in `MediaFrame` remains in the codebase for any
+future genuinely-empty slot, even though no slot currently uses it.
+
+### 18.6 Still outstanding
+
+- **Real cooler and household-item photography from the business** — would
+  replace the two illustrative images described in §18.1.
+- **A real Open Graph image.** `/images/placeholder.svg` is still the OG asset.
+- **Supplementary licensed lifestyle imagery** could not be fetched: every
+  stock-photo host (Unsplash, Pexels, Pixabay) is TLS-blocked in the build
+  environment.
+- **The dedicated motion phase** — hero choreography, product interactions,
+  image reveals, section transitions, parallax, logo motion. Phase 3C added
+  **no** new motion; every image reuses the existing `Reveal` system.
+
+Not planned, and not to be added without an explicit client decision: a cart,
+checkout, payments, prices, stock levels, a CMS, or a contact-form backend.
 
 ---
 
 ## 19. Rules That Must Not Be Violated
+
+**Imagery and the founder's identity**
+
+- **Founder identity preserved; face was not replaced or regenerated.** Never
+  generate, swap, reshape or beauty-filter the owner's face. Any future work on
+  that portrait must start from
+  `public/images/source/photo_6041819337141719603_y.jpg` and must be verified
+  against the original before it is committed.
+- `public/images/source/` is **read-only**. Never edit or delete the originals.
+- Never present the two illustrative category images as photographs of PNK
+  stock, and never remove their on-page label while `imageIsIllustrative` is
+  `true`.
+- Never replace the client's authentic logo, portrait or product photographs
+  with AI-generated or generic substitutes.
 
 **Git**
 
@@ -594,7 +764,9 @@ prices, stock availability, or export capability.
 ---
 
 **LAST UPDATED:** 2026-08-11
-**CURRENT PHASE:** Phase 3B — Branding, Real Imagery, Product Photography & Executive Portrait (complete)
-**CURRENT DEV COMMIT:** see `git log origin/dev -1` — Phase 3B commit "feat: integrate prepared client branding, product photography and owner portrait"
-**VERCEL PREVIEW STATUS:** see the Phase 3B delivery report / Vercel dashboard
-**NEXT ACTION:** Client review of the Phase 3B Preview (logo, portrait, product imagery, mobile layout). Then: cooler + household-item photography, a real OG image, and the dedicated motion phase (§18)
+**CURRENT PHASE:** Phase 3C — Visual Enhancement & Professional Art Direction (complete)
+**CURRENT DEV COMMIT:** `__COMMIT__`
+**CURRENT DEV STATE:** `dev` is ahead of `main`; `main` remains untouched at `522ded38ab099b6e80f29f9938d6cfaeeb97f116`. Working tree clean.
+**CI STATUS:** `__CI__`
+**VERCEL PREVIEW URL:** `__PREVIEW__`
+**NEXT ACTION:** Client review of the Phase 3C Preview (founder portrait, category artwork, product imagery, mobile layout). Then the dedicated motion and interaction phase (§18.6).

@@ -12,6 +12,7 @@
       "icon": "flask",
       "image": "/images/products/gluck-vacuum-food-jar.webp",
       "imageAlt": "A GLÜCK Premium vacuum-insulated stainless steel food jar, part of the flask range stocked by PNK ENTERPRISES.",
+      "imageIsIllustrative": false,
       "gallery": [
         {
           "src": "/images/products/gluck-vacuum-food-jar.webp",
@@ -52,8 +53,9 @@
       "summary": "Insulated coolers for storing and transporting food and drinks.",
       "intro": "Coolers sit alongside the flask range and serve the same purpose at a larger scale: holding food and drinks at temperature while they are stored or moved. They are commonly bought for households, catering and events.",
       "icon": "cooler",
-      "image": null,
-      "imageAlt": null,
+      "image": "/images/categories/coolers-category.webp",
+      "imageAlt": "Illustrative category image: a modern insulated cooler box on a plain studio surface.",
+      "imageIsIllustrative": true,
       "gallery": [],
       "groups": [
         {
@@ -83,6 +85,7 @@
       "icon": "pot",
       "image": "/images/products/crown-star-aluminium-cookware-set.webp",
       "imageAlt": "A Crown Star Master Chef ten-piece aluminium cookware set of lidded pots in graduated sizes.",
+      "imageIsIllustrative": false,
       "gallery": [
         {
           "src": "/images/products/crown-star-aluminium-cookware-set.webp",
@@ -121,6 +124,7 @@
       "icon": "blender",
       "image": "/images/products/sokany-air-fryer.webp",
       "imageAlt": "A Sokany healthy air fryer with twin control dials and a pull-out frying drawer.",
+      "imageIsIllustrative": false,
       "gallery": [
         {
           "src": "/images/products/sokany-air-fryer.webp",
@@ -169,8 +173,9 @@
       "summary": "General household products stocked alongside the main ranges.",
       "intro": "Beyond the core flask, kitchen and appliance ranges, PNK ENTERPRISES stocks general household items. Because this part of the range changes most often, it is best to ask the business directly about what is currently available.",
       "icon": "home",
-      "image": null,
-      "imageAlt": null,
+      "image": "/images/categories/household-items-category.webp",
+      "imageAlt": "Illustrative category image: everyday household essentials arranged on a plain studio surface.",
+      "imageIsIllustrative": true,
       "gallery": [],
       "groups": [
         {

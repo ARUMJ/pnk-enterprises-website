@@ -38,6 +38,15 @@ export type ProductCategory = {
   /** Written alongside the photograph it describes, never guessed ahead of it. */
   imageAlt: string | null;
   /**
+   * True where `image` is illustrative category artwork rather than a
+   * photograph of stock the business holds. Phase 3C added such artwork for
+   * the two ranges with no client photography (coolers, household items) so
+   * those pages read as finished rather than empty. Wherever it is true the
+   * UI must label the image, and the alt text must never imply the pictured
+   * item is PNK inventory.
+   */
+  imageIsIllustrative: boolean;
+  /**
    * Additional photographs of stock the business carries, supplied by the
    * business. Empty where no authentic photograph of the range exists — the
    * gallery is never padded with stock imagery or with a product from a

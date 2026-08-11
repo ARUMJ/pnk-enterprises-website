@@ -97,20 +97,30 @@ export default async function ProductCategoryPage({ params }: PageProps) {
             </div>
 
             <Reveal delay={160} variant="mask">
-              <MediaFrame
-                src={category.image}
-                alt={category.imageAlt ?? undefined}
-                ratio="landscape"
-                priority
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                fallback={
-                  <CategoryIcon
-                    name={category.icon}
-                    className="text-ink-400 h-16 w-16"
-                  />
-                }
-                reservedLabel="Product photography to be supplied by the business"
-              />
+              <figure className="m-0">
+                <MediaFrame
+                  src={category.image}
+                  alt={category.imageAlt ?? undefined}
+                  ratio="landscape"
+                  priority
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  fallback={
+                    <CategoryIcon
+                      name={category.icon}
+                      className="text-ink-400 h-16 w-16"
+                    />
+                  }
+                  reservedLabel="Product photography to be supplied by the business"
+                />
+                {/* Stated plainly wherever the image is artwork rather than a
+                    photograph of stock, so nobody reads it as inventory. */}
+                {category.imageIsIllustrative ? (
+                  <figcaption className="text-ink-600 mt-3 text-xs leading-relaxed">
+                    Illustrative category image, not a photograph of stock held.
+                    Ask us what is currently available.
+                  </figcaption>
+                ) : null}
+              </figure>
             </Reveal>
           </div>
         </Container>

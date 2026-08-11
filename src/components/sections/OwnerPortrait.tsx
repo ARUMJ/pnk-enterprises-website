@@ -28,7 +28,7 @@ export default function OwnerPortrait() {
             <figure>
               <MediaFrame
                 src="/images/owner/owner-portrait.webp"
-                alt={`The owner of ${localBusiness.name}, photographed outside a building wearing a pale blue traditional outfit.`}
+                alt={`The owner of ${localBusiness.name}, wearing a pale blue traditional outfit, in a business portrait against a plain studio background.`}
                 ratio="portrait"
                 sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
               />
