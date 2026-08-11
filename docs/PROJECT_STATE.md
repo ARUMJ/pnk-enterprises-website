@@ -1332,8 +1332,176 @@ real host.
 
 ---
 
-**LAST UPDATED:** 2026-08-11
-**CURRENT PHASE:** Phase 4 — branded Open Graph share card + documentation truth-up (complete). Phase 3G (the client's real, approved founder photograph) shipped before it.
+## 21. Phase 5 — Motion and Interaction
+
+Phase 5 was scoped to the two things that were actually broken or missing:
+a navigation hover affordance that had never worked, and a hero that
+animated _at_ the visitor but never responded _to_ them. Everything else
+proposed during the assessment was deliberately declined — see §21.5.
+
+### 21.1 The navigation underline was dead code
+
+`SiteHeader.tsx` rendered an underline `<span>` carrying
+`group-hover:scale-x-100`, but the parent `<Link>` never carried the
+`group` class. Tailwind's `group-hover:` variant compiles to
+`:is(:where(.group):hover *)`, so with no `.group` ancestor the rule could
+never match. The underline was present in the markup and permanently
+invisible. A `data-underline` attribute was also emitted for the active
+route with no rule matching it.
+
+The fix stays inside the existing styling architecture — no redesign, no
+JavaScript:
+
+- added `group` to the nav `<Link>`;
+- kept `group-hover:scale-x-100` (now functional);
+- added `group-focus-visible:scale-x-100` so keyboard users get the same
+  affordance as mouse users;
+- added `data-underline:scale-x-100` so the active route's underline is
+  persistent rather than decorative markup.
+
+The mobile navigation panel was not touched.
+
+### 21.2 The hero interaction, and the transform-ownership contract
+
+The hero tiles already had a staggered entrance (`data-enter`), the
+`Reveal` mechanism and a 9-second ambient `.pnk-float` drift. What they
+lacked was any response to the user.
+
+`.pnk-float` animates the `transform` property. Hanging a hover
+`transform` on the same element would mean a keyframe and a transition
+writing one property — the classic fight that produces snapping and
+resets. The interaction is therefore split across three nodes, each
+owning exactly one property:
+
+| Node                | Property    | Motion                                 |
+| ------------------- | ----------- | -------------------------------------- |
+| `figure.pnk-float`  | `transform` | ambient drift, 9s, infinite (keyframe) |
+| `.pnk-tile` (child) | `translate` | hover/focus elevation, `0 -0.375rem`   |
+| `.pnk-tile-media`   | `scale`     | image `1.03`                           |
+
+Three disjoint properties. The ambient animation and the interactive
+transition can never write the same value, so they compose instead of
+competing — no jitter, no animation restart, no snap-back.
+
+Alongside the movement the tile responds with border (bone 26%),
+background (bone 9%) and shadow (`0 26px 50px -32px`) changes. The
+elevation is a third of a rem and the image scale is 3% — deliberately
+restrained, tactile rather than showy.
+
+Hover is gated behind `@media (hover:hover) and (pointer:fine)`, so a tap
+on a touch device cannot leave a tile stuck in the elevated state.
+
+Note for future work: Tailwind v4 emits `translate`, `scale` and `rotate`
+as **discrete CSS properties**; it does not fold them into `transform`.
+That fact is what makes this split safe, and it is also what caused the
+bug in §21.3.
+
+### 21.3 A pre-existing reduced-motion defect, repaired centrally
+
+Because Tailwind v4 emits `translate` rather than `transform`, every
+`motion-reduce:transform-none` guard in the codebase (buttons, cards,
+media, icons) was setting a property that nothing was using. Under
+`prefers-reduced-motion: reduce`, hovered buttons still physically moved.
+
+Rather than rewrite every call site, the guard those components already
+opted into was extended in `globals.css` to mean what its authors
+intended:
+
+```css
+[class~="motion-reduce:transform-none"],
+[class~="motion-reduce:transform-none"]:hover,
+.group:hover [class~="motion-reduce:transform-none"] {
+  translate: none !important;
+  scale: none !important;
+  rotate: none !important;
+}
+```
+
+**Do not "tidy" this rule away.** Deleting it silently reintroduces
+motion for users who asked for less of it.
+
+### 21.4 Reduced-motion behaviour
+
+Under `prefers-reduced-motion: reduce`:
+
+- the ambient float is off (`animation: none`);
+- hero tile `translate`, image `scale` and the shadow transition are off;
+- tile transitions are off;
+- CTA lift is suppressed (via §21.3);
+- **border and background feedback are retained** — hover and focus still
+  communicate, just without movement;
+- all `[data-reveal]` and `[data-enter]` content resolves to `opacity: 1`.
+  Nothing is hidden from anyone, and no content depends on animation to
+  become visible.
+
+No JavaScript motion system was added to achieve any of this.
+
+### 21.5 What was deliberately NOT built — stop proposing these
+
+Phase 5 implemented P0 and P1 only. The following were assessed and
+**rejected**. They are not backlog items; they are decisions:
+
+- cursor tracking / cursor followers / magnetic buttons
+- particle systems, canvas, WebGL
+- heavy or scroll-driven parallax, scroll-jacking
+- 3-D tilt, drag/spring physics
+- animated counters, text-scramble, marquees
+- page-transition overlays
+- animation libraries — **no Framer Motion, no GSAP**; no
+  `requestAnimationFrame` loops, no pointer-tracking client islands
+- applying `Reveal` indiscriminately to every element
+
+No new dependency was added and no new client component was created. The
+site still ships exactly **two** client components. These patterns read as
+generic template motion and are contrary to the restrained industrial
+design language; they should not be reintroduced without an explicit
+client requirement.
+
+One further item, **R4 (making hero tiles navigational)**, was deferred on
+purpose: turning decorative hero elements into links purely to justify
+motion is an information-architecture change, and it needs a real IA
+requirement first.
+
+### 21.6 Files changed
+
+- `src/components/layout/SiteHeader.tsx` — `group` + focus-visible and
+  active-route underline variants
+- `src/components/sections/Hero.tsx` — tile restructured so the floating
+  `<figure>` wraps an interactive `.pnk-tile` child
+- `src/app/globals.css` — hero tile interaction block, its reduced-motion
+  overrides, and the `motion-reduce` repair in §21.3
+
+No other component was modified. The founder portrait pipeline, product
+imagery, OG card, `siteMeta.ts`, `package.json` and the CI workflow were
+not touched.
+
+### 21.7 Verification performed
+
+All four gates green: lint, typecheck, format check, production build.
+All 9 routes return 200; `/nonexistent` returns 404; the OG image renders;
+the home page's JSON-LD parses.
+
+**Behavioural verification was done by cascade resolution over the real
+compiled stylesheet and the real served HTML — not in a browser.** No
+browser can be installed in the build sandbox (Playwright's download is
+network-blocked and no system Chromium exists), so a resolver was used
+that computes winning declarations by specificity, source order and
+`!important`, evaluating media conditions for viewport width,
+`hover:hover`, `pointer:fine` and `prefers-reduced-motion`. It confirmed
+33 assertions across the navigation states, the three-property ownership
+matrix, touch hover suppression and reduced motion.
+
+That is a static analysis of what the browser _will_ compute. It is
+stronger than reading source, but it is not a runtime measurement: frame
+-level jitter, cumulative layout shift and real tap behaviour were argued
+structurally (from the disjoint-property matrix and the pointer gate)
+rather than measured. Anyone with a browser available should confirm
+those three empirically.
+
+---
+
+**LAST UPDATED:** 2026-08-12
+**CURRENT PHASE:** Phase 5 — motion and interaction (complete): the navigation hover/focus/active underline restored, and a restrained hero interaction built on an explicit transform-ownership split. See §21. Phase 4 (OG card) and Phase 3G (the client's real, approved founder photograph) shipped before it.
 **CURRENT DEV COMMIT:** see §20's shipping record for the Phase 4 hashes. Phase 3G shipped at `2a2d5c8` / `53bd3c8`; the handoff document landed at `8d99400`.
 **CURRENT DEV STATE:** `dev` is ahead of `main`; `main` remains untouched at `522ded38ab099b6e80f29f9938d6cfaeeb97f116`. No PR, no merge to `main`, no rewritten history. Working tree clean.
 **CI STATUS:** green on `dev`. Phase 3G ran green at `31541616410` and `31541715091`; the handoff commit at `31542405849`. All four gates (lint, typecheck, format check, production build) are also run locally before every commit.
@@ -1353,4 +1521,4 @@ AI-composited suit or background, or pupil-normalised RMSE re-verification,
 belongs to the **superseded** Phase 3D/3E/3F attempts (§18A, §18B) and must not
 be acted on. The authoritative record is **§18C**.
 
-**NEXT ACTION:** The dedicated motion and interaction phase (§18.6). Nothing is merged to `main` and nothing is in production.
+**NEXT ACTION:** Phase 5 is done. Open items: browser-based confirmation of jitter/CLS/tap behaviour (§21.7), and R4 (hero tiles as links) only if a real IA requirement appears (§21.5). Nothing is merged to `main` and nothing is in production.
