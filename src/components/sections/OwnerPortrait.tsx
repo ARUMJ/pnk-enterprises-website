@@ -11,13 +11,20 @@ import localBusiness from "@/data/localBusiness.json";
  * likeness. His facial pixels are composited in unaltered: no reshaping, no
  * beautifying, no smoothing, no de-ageing. Identity was verified against the
  * source frame after every processing step (pupil-landmark alignment, RMSE
- * 0.0985, zero geometric warp).
+ * 0.073, zero geometric warp) — see §18B of `docs/PROJECT_STATE.md`.
  *
- * The wardrobe (navy suit, white shirt, dark tie), the studio background and
- * the studio lighting are AI-generated art direction, produced because the
- * only portrait the client supplied was taken outdoors in casual dress. The
- * subject, his features and his proportions are real; the styling around him
- * is not. See `docs/PROJECT_STATE.md` for the full provenance record.
+ * The wardrobe (charcoal suit, white shirt, dark navy tie), the studio
+ * background and the studio lighting are AI-generated art direction, produced
+ * because the only portrait the client supplied was taken outdoors in casual
+ * dress. The subject, his features and his proportions are real; the styling
+ * around him is not.
+ *
+ * In the Phase 3E pass the generated surroundings were conformed to the real
+ * face rather than the reverse: scalp/temple/ear/neck sharpness matched to the
+ * face's own texture, a single grain field applied across the whole head, the
+ * colour temperature of the generated head warmed to the face's, and the
+ * artificial rim light restrained. The face itself was masked out of every one
+ * of those operations. See `docs/PROJECT_STATE.md` for the full record.
  *
  * The copy is confined to what the owner has actually stated: the business
  * name, the 1998 account (always qualified), and the stated priorities. There
@@ -35,7 +42,7 @@ export default function OwnerPortrait() {
             <figure>
               <MediaFrame
                 src="/images/owner/owner-portrait.webp"
-                alt={`The owner of ${localBusiness.name}, in a dark navy suit, white shirt and dark tie, photographed from the chest up against a near-black studio background.`}
+                alt={`The owner of ${localBusiness.name}, in a charcoal suit, white shirt and dark navy tie, photographed from the chest up against a dark ink-blue studio background.`}
                 ratio="portrait"
                 sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
               />

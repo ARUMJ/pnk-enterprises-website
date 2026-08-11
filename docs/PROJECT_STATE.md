@@ -561,7 +561,7 @@ substitutes:
 | Asset                                           | Origin                                |
 | ----------------------------------------------- | ------------------------------------- |
 | `public/images/brand/pnk-mark-*.{png,webp}`     | Client's own logo                     |
-| `public/images/owner/owner-portrait.{webp,jpg}` | Owner's real face (hybrid — see §18A) |
+| `public/images/owner/owner-portrait.{webp,jpg}` | Owner's real face (hybrid — see §18B) |
 | the six files in `public/images/products/`      | Client's own product photos           |
 | the eight originals in `public/images/source/`  | Untouched client uploads              |
 
@@ -694,10 +694,17 @@ checkout, payments, prices, stock levels, a CMS, or a contact-form backend.
 
 ---
 
-## 18A. Phase 3D — The Approved Founder Portrait (READ THIS BEFORE TOUCHING IT)
+## 18A. Phase 3D — The First Approved Founder Portrait (SUPERSEDED BY §18B)
 
-If you are a new agent picking this project up, this section is the complete
-record of the founder portrait decision. Do not re-derive it.
+> **SUPERSEDED.** The portrait described in this section was replaced on
+> 2026-08-11 by the **Phase 3E v2** portrait. See **§18B** for the live asset,
+> its identity score and its build recipe. This section is retained because its
+> principles, its verification protocol and especially its list of dead ends
+> are all still binding — only the shipped file changed.
+
+If you are a new agent picking this project up, read this section for the
+reasoning and the dead ends, then read §18B for what is actually live. Do not
+re-derive either.
 
 ### 18A.1 What was approved
 
@@ -705,13 +712,13 @@ The live founder portrait is **"refined Variant B"**, approved by the client on
 2026-08-11 after a two-variant comparison (Variant A, dark charcoal, was
 rejected) and one refinement round.
 
-| Item            | Value                                                               |
-| --------------- | ------------------------------------------------------------------- |
-| Live asset      | `public/images/owner/owner-portrait.webp` (WebP q84, 160 KB)        |
-| Live fallback   | `public/images/owner/owner-portrait.jpg` (JPEG q90, 503 KB)         |
-| Dimensions      | 1200x1500 — **exactly 4:5**, matching `MediaFrame ratio="portrait"` |
-| Identity source | `public/images/source/photo_6041819337141719603_y.jpg`              |
-| Rendered at     | `OwnerPortrait` section, `/about` — the only place it is used       |
+| Item              | Value                                                               |
+| ----------------- | ------------------------------------------------------------------- |
+| Asset (former)    | `owner-portrait.webp` (WebP q84, 160 KB) — **replaced, see §18B**   |
+| Fallback (former) | `owner-portrait.jpg` (JPEG q90, 503 KB) — **replaced, see §18B**    |
+| Dimensions        | 1200x1500 — **exactly 4:5**, matching `MediaFrame ratio="portrait"` |
+| Identity source   | `public/images/source/photo_6041819337141719603_y.jpg`              |
+| Rendered at       | `OwnerPortrait` section, `/about` — the only place it is used       |
 
 The asset is **1200x1500 and must stay 1200x1500**. `MediaFrame` reserves
 `aspect-[4/5]` up front; any other ratio reintroduces cumulative layout shift.
@@ -817,6 +824,176 @@ Only two files carry the change: the portrait asset itself and
 `src/components/sections/OwnerPortrait.tsx` (alt text + provenance comment).
 No layout, no component API, no motion, no copy, no business fact, no
 dependency, no CI configuration, and nothing in `public/images/source/`.
+
+---
+
+## 18B. Phase 3E — THE LIVE FOUNDER PORTRAIT (CURRENT — READ THIS FIRST)
+
+This supersedes §18A. Approved by the client and integrated on 2026-08-11.
+
+### 18B.1 What is live
+
+| Item              | Value                                                                |
+| ----------------- | -------------------------------------------------------------------- |
+| Live asset        | `public/images/owner/owner-portrait.webp` (WebP q84, 152 KB)         |
+| Live fallback     | `public/images/owner/owner-portrait.jpg` (JPEG q90, 366 KB)          |
+| Dimensions        | 1200x1500 — **exactly 4:5**, matching `MediaFrame ratio="portrait"`  |
+| Identity source   | `public/images/source/photo_6041819337141719603_y.jpg`               |
+| Rendered at       | `OwnerPortrait` section, `/about` — the only place it is used        |
+| Review candidates | `portrait-work/review/ceo-final-v2.{webp,jpg}` (scratch, not in Git) |
+
+Still **1200x1500 and must stay 1200x1500** — `MediaFrame` reserves
+`aspect-[4/5]` up front; any other ratio reintroduces layout shift.
+
+### 18B.2 Correction to the Phase 3E brief — the "laptop screen" premise
+
+The brief asked for removal of screen artifacts (moire, glare, black
+horizontal lines, screen borders, keystone), on the belief that the source was
+a photograph of a laptop screen. **This was investigated and disproved.** A
+periodicity test on the source found no periodic peaks, and the file has no
+screen pixel structure, no glare, no border and no keystone distortion.
+
+`photo_6041819337141719603_y.jpg` is a **direct outdoor phone snapshot**
+(960x1280, JPEG q87, 2x2 subsampling, no EXIF). The "black horizontal lines"
+are **real terrazzo step nosings** in the scene behind him.
+
+The real defect was **low resolution and softness**: interocular distance is
+only **75.3 px**, requiring a 2.40x upscale. That is what was fixed. **Do not
+fabricate screen-artifact removal work for this image.**
+
+### 18B.3 What is real and what is not
+
+**REAL (the client's own photographed pixels):** his face in full — eyes, nose,
+mouth, lips, jawline, cheeks, forehead, ears, facial hair, skin texture, skin
+tone, age, ethnicity, proportions and expression.
+
+**AI-GENERATED (art direction only):** the charcoal suit, white shirt and dark
+navy tie; the dark ink-blue studio background with restrained warm falloff;
+the studio lighting environment; the scalp and neck surround that the real
+face is composited into.
+
+Note the change from §18A: the wardrobe is now **charcoal with a navy tie**
+(previously described as a navy suit). The alt text was updated to match.
+
+### 18B.4 Identity verification — the measurement of record
+
+| Subject                           | RMSE       | Offset  | Verdict |
+| --------------------------------- | ---------- | ------- | ------- |
+| **Live Phase 3E v2 portrait**     | **0.0731** | (30,30) | accept  |
+| Phase 3E v1 candidate             | 0.0721     | (30,30) | accept  |
+| Phase 3D portrait (previous live) | 0.0985     | (30,29) | accept  |
+| Fully AI-rendered face (control)  | 0.2084     | (0,19)  | REJECT  |
+
+Protocol (`portrait-work/diag/mkalign.sh`): affine-normalise to interocular
+distance 200 px with pupils at (200,260)/(400,260) on a 600x760 canvas,
+`-colorspace Gray -normalize`; patch = `A_src.png -crop 320x300+140+180`;
+window = `-crop 380x360+110+150`; then
+`compare -metric RMSE -subimage-search`. **Pass = offset (30,30) with low RMSE.**
+Bands: accept <=0.11, grey 0.11–0.15, reject >=0.15.
+
+**Always feed the exact affine target coordinates for a generated or composited
+image. Never re-probe its pupils with a landmark detector** — drift produced a
+false 0.169 reading once already.
+
+### 18B.5 RMSE is a tripwire, not a quality score
+
+The client stated this explicitly and it is now a project rule: **a lower RMSE
+does not mean a better portrait.** During Phase 3E a variant scored **0.0647**
+— the best number of the entire project — and had a glowing white halo around
+the head. It was discarded on sight. Two other well-scoring techniques were
+also rejected visually.
+
+Use RMSE only to prove the face did not drift. Judge everything else by eye:
+identity, photographic realism, seamless integration, professional appearance.
+
+### 18B.6 How the v2 composite was built
+
+Working directory (scratch, **not** in Git): `/home/user/portrait-work/diag/`.
+
+The governing idea, and the reason v2 works: **conform the generated
+surroundings to the real face, never the reverse.** The face was masked out of
+every operation below.
+
+1. **Restore** the source: LAB chroma-only blur (chroma noise dominated —
+   HFstd R 21.4 / G 19.3 / B 22.8). `-selective-blur` was tried and rejected
+   (it destroyed luma detail, 5.20 -> 4.42).
+2. **Register** to the AI plate by pupil-landmark affine warp
+   (scale 1.8992, rotation -6.93 deg).
+3. **Colour-match** per channel, then apply **gamma 1.26** to bring his sunlit
+   outdoor exposure into the studio lighting. Swept; 1.26 was the visual
+   optimum, 1.34 the numerical one but it muddied the skin.
+4. **Mask**: skin-positive test intersected with an ellipse at
+   `468,332 r130,172` feathered 36 px, plus a brightness gate (threshold 20)
+   that suppresses the source's sunlit outdoor background leaking round the
+   scalp — with an inner **protected core** at 70% radius so the gate can never
+   clip his real forehead highlights.
+5. **Texture-match the surroundings to the face.** Measured high-frequency
+   energy per region; the AI plate was uniformly oversharpened
+   (ears/temples 5.9–9.6 vs the real face's 4.6). Softened the generated head
+   by `0x0.8` until every region sat within **+/-1.0** of the real-face value.
+6. **One grain field across the whole head.** This was the structural flaw in
+   the earlier build: grain had been baked into the background layer, so the
+   real face received none — the head was two different film stocks. Now a
+   single Gaussian field (attenuate 0.16) covers face and surround together.
+7. **Colour-temperature match**: the generated head's right side was far cooler
+   than his skin (R-B of 11.6 vs ~78). Warm-shifted the generated head only,
+   to R-B 63–75. His forehead stayed at exactly 85.3 throughout — proof the
+   mask held.
+8. **Restrain the artificial rim light** where its warmth exceeded his skin's.
+9. **Unify lighting**: conform the face's _ultra-low-frequency_ illumination
+   (70 px blur — broad light only, zero facial detail) to the studio gradient
+   at **55% strength**. 70% flattened his cheek modelling and was rejected.
+10. **Under-jaw correction**: a pale patch (luma spike to 90 between 65 and 57)
+    darkened into natural shadow.
+11. **Confine grain and softening to the head.** A first attempt leaked grain
+    into the backdrop (0.73 -> 4.10) and destroyed the suit weave
+    (11.46 -> 4.81). Final: background 0.75 vs plate 0.73, suit 11.46 vs 11.46.
+12. **Crop** `800x1000+68+20`, Lanczos to 1200x1500, gentle final unsharp.
+
+### 18B.7 Composition
+
+Chest-up. Eyeline at **0.299** of frame height (classic portrait thirds),
+**7.7%** headroom, both shoulders in frame, clean mid-chest crop. No hands in
+frame, so no wrist or watch crop. Verified at desktop (~520x650) and mobile
+(~360x450).
+
+### 18B.8 Remaining visual limitation — disclosed, not hidden
+
+At **100% zoom** a **faint diagonal line remains at the left temple**. It is a
+residual edge present in the client's own source frame. Removing it would mean
+painting over or blurring his real skin, which the identity rule forbids.
+
+The oval seam, colour boundary and sharpness mismatch that affected earlier
+versions are **gone**. Ears, jaw and neck show no compositing boundary. The
+temple line is **not visible at either website display size**.
+
+**The limitation was accepted deliberately. Do not "fix" it by touching the face.**
+
+### 18B.9 Dead ends — do not retry these
+
+- **Frequency-separation compositing** of the face: better seam, but identity
+  fell to 0.154 (reject band). It replaced his facial low-frequency tone.
+- **Boundary tone-correction ring**: dropped identity to 0.082 and did not
+  visibly remove the ring.
+- **Normalised-convolution outward extrapolation** of the face's lighting: the
+  0.0647 halo variant described in §18B.5.
+- **Brightness gate without a protected core**: clips his real forehead
+  highlights (identity 0.115–0.142).
+- **Per-pixel relighting of the face** — still a dead end, as in §18A.
+- **Lighting transfer via `-compose Divide` is silently clamped at gain 1.0**,
+  so the face could only ever darken. Use a signed `-compose Mathematics`
+  transfer, or the x0.5 / x2 workaround.
+- **`-compose Minus` computes _second minus first_**; `-compose Mathematics`
+  treats `u` as the _second_ image. Getting either backwards silently yields an
+  all-black mask (mean ~5e-06).
+
+### 18B.10 What Phase 3E did NOT change
+
+Three files carry the change: the two portrait assets and
+`src/components/sections/OwnerPortrait.tsx` (alt text + provenance comment).
+No layout, no component API, no motion, no copy, no business fact, no
+dependency, no CI configuration, and nothing in `public/images/source/` —
+all 8 source originals verified byte-identical by MD5 after the work.
 
 ---
 
