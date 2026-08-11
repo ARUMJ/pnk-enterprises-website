@@ -920,7 +920,7 @@ Files changed (6): `public/images/owner/owner-portrait.webp`,
 `next.config.ts`, `src/components/sections/OwnerPortrait.tsx`,
 `docs/PROJECT_STATE.md`.
 
-### 18C.5 Rules for anyone touching this portrait
+### 18C.6 Rules for anyone touching this portrait
 
 - **Never** regenerate, face-swap, AI-approximate, de-age, smooth, retone or
   alter the client's facial structure, hairline or skin.
