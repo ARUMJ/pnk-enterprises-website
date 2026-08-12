@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 /**
@@ -18,8 +19,17 @@ import { useEffect } from "react";
  *   revealed immediately, in one pass, with no observer created at all.
  * - Content is never hidden without script: the hidden state is scoped to
  *   `@media (scripting: enabled)` in CSS.
+ * - The effect re-runs on every `pathname` change. This is load-bearing, not
+ *   cosmetic: the island lives in the root layout, and with no `template.tsx`
+ *   that layout never remounts during client-side navigation. Keyed only on
+ *   `[]`, the observer would bind to the first page's nodes and never see the
+ *   markup of any page reached through a `<Link>`, leaving every `data-reveal`
+ *   element on it permanently hidden — `variant="mask"` elements fully clipped
+ *   by `clip-path`. Do not drop this dependency.
  */
 export default function RevealObserver() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const nodes = Array.from(
       document.querySelectorAll<HTMLElement>(
@@ -59,7 +69,7 @@ export default function RevealObserver() {
     for (const node of nodes) observer.observe(node);
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return null;
 }
