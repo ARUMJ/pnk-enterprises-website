@@ -23,6 +23,11 @@ import { categoryPath, type ProductCategory } from "@/lib/products";
  *
  * `MediaFrame` reserves the final aspect ratio now, so Phase 3B photography
  * drops in with zero layout shift and zero changes here.
+ *
+ * Where a category's image is illustrative artwork rather than a photograph of
+ * stock, the card says so on its face — see `IllustrativeBadge` below. That
+ * label disappears on its own the moment real photography sets
+ * `imageIsIllustrative` to `false` in the data layer.
  */
 
 type Variant = "feature" | "standard" | "compact";
@@ -33,6 +38,35 @@ const shell =
 /** Expands the link's hit area to the whole card without nesting controls. */
 const stretchedLink =
   "after:absolute after:inset-0 after:content-[''] rounded-(--radius-sm) underline-offset-4 outline-none focus-visible:underline";
+
+/**
+ * Marks a card whose image is illustrative artwork rather than a photograph of
+ * stock the business holds (`imageIsIllustrative` in `productCategories.json`).
+ *
+ * The category detail page already states this in full prose. The cards on the
+ * homepage and /products previously said nothing, which left AI-generated
+ * cooler and household-item artwork sitting in the same treatment as the
+ * client's authentic product photography. This is the card-sized equivalent:
+ * short enough not to shout, explicit enough that nobody mistakes the image
+ * for inventory.
+ *
+ * Positioned against the card shell (already `relative`) rather than wrapping
+ * `MediaFrame`, so the feature variant's `sm:w-[46%]` media column keeps its
+ * flex behaviour and no layout changes at any breakpoint.
+ *
+ * `pointer-events-none` keeps the whole card clickable: the stretched link's
+ * `::after` overlay paints above this badge, so a click here still follows the
+ * card link and the image hover-scale is untouched. Left readable by assistive
+ * tech — the alt text carries the same caveat, and suppressing a truth claim
+ * from screen readers to avoid mild redundancy would be the wrong trade.
+ */
+function IllustrativeBadge() {
+  return (
+    <p className="border-ink-200/80 bg-bone/90 text-ink-700 pointer-events-none absolute top-4 left-4 rounded-full border px-2.5 py-1 text-[0.65rem] font-medium tracking-[0.12em] uppercase shadow-[0_1px_2px_rgba(14,12,10,0.08)] backdrop-blur-[2px]">
+      Illustrative image
+    </p>
+  );
+}
 
 function Affordance({ label = "View range" }: { label?: string }) {
   return (
@@ -63,6 +97,14 @@ export default function ProductCategoryCard({
   const Heading = headingLevel;
   const href = categoryPath(category.slug);
   const groupNames = category.groups.map((group) => group.name);
+  /**
+   * Only label an image that actually renders. Where `image` is null the frame
+   * shows its "photography pending" reserved state, which is already honest —
+   * badging that would claim artwork exists where none does.
+   */
+  const showIllustrativeBadge = Boolean(
+    category.image && category.imageIsIllustrative,
+  );
 
   if (variant === "compact") {
     return (
@@ -104,6 +146,7 @@ export default function ProductCategoryCard({
           }
           reservedLabel="Photography pending"
         />
+        {showIllustrativeBadge ? <IllustrativeBadge /> : null}
 
         <div className="flex flex-1 flex-col p-7 sm:p-9">
           <p className="text-brass-700 text-xs font-semibold tracking-[0.18em] uppercase">
@@ -151,6 +194,7 @@ export default function ProductCategoryCard({
         }
         reservedLabel="Photography pending"
       />
+      {showIllustrativeBadge ? <IllustrativeBadge /> : null}
 
       <div className="flex flex-1 flex-col p-6">
         <Heading className="font-display text-ink-900 text-xl">
