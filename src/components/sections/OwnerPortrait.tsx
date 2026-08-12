@@ -23,6 +23,14 @@ import localBusiness from "@/data/localBusiness.json";
  * the crop to the top so that any future rounding is taken from the jacket
  * rather than from his head.
  *
+ * The photograph is deliberately NOT wrapped in `<Reveal>`, while the copy
+ * beside it still is. The client's identity photograph is content, not
+ * decorative motion, so it must never depend on an animation lifecycle to
+ * become visible: not on IntersectionObserver firing, not on client-side
+ * navigation timing, not on how fast the reveal island hydrates, and not on
+ * any mobile browser quirk. Text can animate in; his face may not be held
+ * back waiting for it. Do not re-wrap this figure in `Reveal`.
+ *
  * The copy is confined to what the owner has actually stated: the business
  * name, the 1998 account (always qualified), and the stated priorities. There
  * is no invented biography, education, job history or credential.
@@ -35,21 +43,19 @@ export default function OwnerPortrait() {
     >
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-          <Reveal variant="mask">
-            <figure>
-              <MediaFrame
-                src="/images/owner/owner-portrait.webp"
-                alt={`The owner of ${localBusiness.name}, in a navy suit, white shirt and navy tie, photographed from the chest up.`}
-                ratio="portrait"
-                sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
-                objectPosition="50% 0%"
-                quality={90}
-              />
-              <figcaption className="text-ink-600 mt-4 text-sm leading-relaxed">
-                The owner of {localBusiness.name}.
-              </figcaption>
-            </figure>
-          </Reveal>
+          <figure>
+            <MediaFrame
+              src="/images/owner/owner-portrait.webp"
+              alt={`The owner of ${localBusiness.name}, in a navy suit, white shirt and navy tie, photographed from the chest up.`}
+              ratio="portrait"
+              sizes="(min-width: 1024px) 32vw, (min-width: 640px) 60vw, 100vw"
+              objectPosition="50% 0%"
+              quality={90}
+            />
+            <figcaption className="text-ink-600 mt-4 text-sm leading-relaxed">
+              The owner of {localBusiness.name}.
+            </figcaption>
+          </figure>
 
           <div>
             <Reveal>
